@@ -7,13 +7,13 @@
   --primary: #0071C5;       /* 山本ブルー */
   --brand-green: #4ADE80;   /* スポルアップグリーン */
   --accent-green: var(--brand-green); /* 既存コードの互換エイリアス */
-  --accent-red: #D62828;    /* 煉瓦寄りのチラシ赤 (大面積でも刺激が強すぎないトーン) */
+  --accent-red: #D62828;    /* 煉瓦寄りのチラシ赤 */
   --text-main: #111111;
   --text-muted: #444444;
-  --bg-main: #0071C5;
+  --bg-main: #fff;          /* Step2.5: 青ベース → 白ベース (Japanet的清潔) */
   --bg-soft: #fff;
   --bg-dark: #111;
-  --border-color: #111;
+  --border-color: #E5E5E5;  /* Step2.5: 黒ボーダー → 薄グレー */
   --youtube-red: #ff0000;
   
   /* Typography — Step2.5: 業務書類感へ "つまらなく"
@@ -38,8 +38,8 @@
   --shadow-solid-md: none;
   --shadow-solid-lg: none;
   --transition-fast: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-  --border-thick: 3px solid #111;
-  --border-radius-pop: 2px; /* 12px → 2px (直角化) */
+  --border-thick: 1px solid #E5E5E5; /* Step2.5: 黒太 3px → グレー細 1px (Japanet的親切) */
+  --border-radius-pop: 2px;
 }
 
 /* Base Styles */
@@ -60,16 +60,12 @@ a {
 body {
   font-family: var(--font-sans);
   color: var(--text-main);
-  background-color: var(--bg-main);
-  /* Blueprint / Grid pattern */
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-  background-size: 30px 30px;
+  background-color: var(--bg-main); /* 白 */
+  /* Step2.5: blueprint grid pattern を撤廃し、清潔な白地に */
   line-height: 1.7;
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden; /* カードの横スライドアニメで横スクロールが発生しないように */
+  overflow-x: hidden;
 }
 
 /* Section Header — 全幅ブロック + text-align: center で中央揃え
@@ -102,11 +98,11 @@ body {
    前面(main)   : 赤グラデ塗り (background-clip:text)
    → 前面が背面の内側半分を完全に覆い隠すので、外側オンリー白フチが確実に残る
    ====================================================================== */
-/* 描画レイヤー:
-   背面 = main .section-title 本体 (白ベタ + 8px白ストローク → 分厚い白いグリフの塊)
-   前面 = ::before (赤グラデのみ、ストロークなし)
-   → 前面のグラデが背面の内側を完全に覆い隠し、外側の白フチだけ残る
-   黒ドロップ影は main 側に filter でアルファ全体に沿ってかける */
+/* 描画レイヤー (3層構造):
+   最背面 ::after  = 太い黒ストローク (12px) → 外側2pxが黒い細縁として残る
+   中間   main    = 白ベタ + 白ストローク 8px → 分厚い白いグリフ
+   最前面 ::before = 赤グラデ塗り → 中間の内側を覆う
+   ドロップ影 = filter: drop-shadow でふわっと全体に */
 .section-title {
   position: relative;
   font-family: var(--font-impact);
@@ -117,19 +113,44 @@ body {
   margin-bottom: 1.25rem;
   padding: 1.5rem 2rem 0.5rem;
 
-  /* 背面: 白ベタ + 太白ストローク = 分厚い白グリフ */
+  /* 中間層: 白ベタ + 太白ストローク */
   color: #fff;
   -webkit-text-stroke: 8px #fff;
   background: transparent;
 
-  /* 黒ドロップ影 */
-  filter: drop-shadow(5px 5px 0 #111);
+  /* ふわっとしたドロップ影 (ハードオフセット廃止) */
+  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.3));
 
   /* シアー */
   transform: skewX(-7deg);
 }
 
-/* 前面: 赤グラデ塗り (same position, 完全に重なる) */
+/* 最背面レイヤー: 黒細縁 (白縁の外側2pxだけ見える太さに調整) */
+.section-title::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: inherit;
+  text-align: inherit;
+  white-space: pre;
+  line-height: inherit;
+  letter-spacing: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+
+  -webkit-text-stroke: 10px #111; /* 白縁8pxとの差分2px→1pxで細縁に */
+  color: transparent;
+  z-index: -1;
+  background: transparent;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+}
+
+/* 最前面レイヤー: 赤グラデ塗り */
 .section-title::before {
   content: attr(data-text);
   position: absolute;
@@ -146,7 +167,7 @@ body {
   font-size: inherit;
   font-weight: inherit;
 
-  background: linear-gradient(180deg, #FF4848 0%, #B0162A 100%);
+  background: linear-gradient(180deg, #FF5E5E 0%, #D52538 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -202,11 +223,29 @@ body {
   background-color: #fff;
   background-image: none;
 }
-#support.bg-soft .section-title {
-  color: var(--text-main);
-  text-shadow: none;
-  -webkit-text-stroke: 0;
+
+/* ======================================================================
+   Step2.5: 背景リズム = 白 ⇔ 薄グレー の 2段階のみ (Japanet的安心感)
+   交互に置いて視線誘導のリズムを作る
+   ====================================================================== */
+
+/* 白セクション (default) : #company, #support, #profile */
+#company,
+#profile {
+  background-color: #fff;
 }
+
+/* 薄グレーセクション : Stats band, #youtube (視線の区切り役) */
+.success-band {
+  background: #F5F5F5 !important;
+}
+
+#youtube {
+  background-color: #F5F5F5;
+}
+/* Step2.5: #support のタイトル override は撤去
+   3層構造 (::after黒縁 + main白縁 + ::before赤グラデ) が
+   白地でも自然に機能する (白縁は背景に溶け、黒縁と赤が残る) */
 
 /* Results (緑地) では section-label を赤バッジに (緑×赤のチラシ配色) */
 #results .section-label {
@@ -561,10 +600,10 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
-  background: #f0f8ff;
+  background: #FCEAEA;
   padding: 1.5rem;
   border-radius: 8px;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--accent-red);
 }
 
 .result-data .before {
@@ -585,7 +624,7 @@ body {
   font-family: var(--font-impact);
   font-weight: 900;
   font-size: 2.2rem;
-  color: var(--primary);
+  color: var(--accent-red);
   line-height: 1;
   display: inline-block;
   transform: skewX(-7deg);
