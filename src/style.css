@@ -1,14 +1,13 @@
 :root {
-  /* Colors - Pop & Retro Theme
-     2026/04: カラーパレット再設計 (カスケード冷却)
-       旧 --accent-orange → 削除 (→ var は --accent-yellow へ全置換)
-       旧 --accent-yellow → --accent-green へ全置換
-       新 --accent-yellow : CTA/アクセント用の明るい黄色
-       新 --accent-green  : 旧yellow位置用の明るいグリーン */
-  --primary: #0071C5; /* Bright Blue */
-  --accent-green: #4ADE80; /* 明るめグリーン */
-  --accent-yellow: #FFDE00; /* CTA強調色 (旧orange位置を継承) */
-  --accent-pink: #FF66B2;
+  /* Colors - Japanet-inspired 3-color brand palette
+     2026/04 Step1: pink/yellow を撤廃し赤を導入
+       --primary     : 青 = キャプテン山本 (維持)
+       --brand-green : 緑 = 株式会社スポルアップ (維持、--accent-green エイリアスも残置)
+       --accent-red  : 赤 = 緊急・強調・セールバナー (新規) */
+  --primary: #0071C5;       /* 山本ブルー */
+  --brand-green: #4ADE80;   /* スポルアップグリーン */
+  --accent-green: var(--brand-green); /* 既存コードの互換エイリアス */
+  --accent-red: #D62828;    /* 煉瓦寄りのチラシ赤 (大面積でも刺激が強すぎないトーン) */
   --text-main: #111111;
   --text-muted: #444444;
   --bg-main: #0071C5;
@@ -159,14 +158,20 @@ body {
   background-size: 30px 30px;
 }
 
-/* セクションごとにテーマ色を割り振る — 黄色連続の単調さを回避 */
+/* Step1: #support は白地に戻し、タイトルも黒フラット (赤は全体で "テキスト強調専用" の一貫ルール) */
 #support.bg-soft {
-  background-color: var(--accent-pink);
+  background-color: #fff;
+  background-image: none;
+}
+#support.bg-soft .section-title {
+  color: var(--text-main);
+  text-shadow: none;
 }
 
-/* Results セクションの緑地では、同色の section-label を黄色に差し替え */
+/* Results (緑地) では section-label を赤バッジに (緑×赤のチラシ配色) */
 #results .section-label {
-  background: var(--accent-yellow);
+  background: var(--accent-red);
+  color: #fff;
 }
 
 .bg-dark {
@@ -326,35 +331,34 @@ body {
   max-width: 70%;
   text-align: left;
   padding-left: max(2.5rem, 5%);
-  box-shadow: 0 10px 0 var(--accent-yellow);
+  box-shadow: 0 10px 0 var(--accent-red);
   transform: rotate(-1deg);
   transform-origin: left center;
 }
 
-/* 2行目(30倍): 右抜け + ピンクシャドウ + やや下 */
+/* 2行目(30倍): 右抜け + 青シャドウ (山本ブランド識別) + やや下 */
 .hero-line:nth-child(2) {
   right: 0;
   bottom: 6%;
   max-width: 70%;
   text-align: right;
   padding-right: max(2.5rem, 5%);
-  box-shadow: 0 -10px 0 var(--accent-pink);
+  box-shadow: 0 -10px 0 var(--primary);
   transform: rotate(1deg);
   transform-origin: right center;
 }
 
-/* 帯の中の数字: M PLUS 900 青 + 一段大きく */
+/* 帯の中の数字: 赤・フラット (Japanet式デカ赤数字) */
 .hero-number {
   font-family: var(--font-impact);
   font-weight: 900;
   font-size: 3.2rem;
   font-style: normal;
-  color: var(--primary);
+  color: var(--accent-red);
   padding: 0 0.1em;
   display: inline-block;
   vertical-align: -0.1em;
   line-height: 1;
-  text-shadow: 3px 3px 0 #111;
 }
 
 .hero-subtitle {
@@ -390,7 +394,7 @@ body {
   align-items: center;
   gap: 1.2rem;
   padding: 1.7rem 4rem;
-  background: var(--accent-yellow);
+  background: var(--accent-red);
   color: #fff;
   font-family: var(--font-impact);
   font-weight: 900;
@@ -405,7 +409,7 @@ body {
 .btn-hero-cta:hover {
   transform: translate(4px, 4px);
   box-shadow: 6px 6px 0 #111;
-  background: #FFE933; /* ホバー時は一段明るい黄色 */
+  background: #FF3B47; /* ホバー時は一段明るい赤 */
 }
 
 .btn-hero-cta .btn-badge {
@@ -463,7 +467,7 @@ body {
   font-family: var(--font-impact);
   font-weight: 900;
   font-size: 2.5rem;
-  background: var(--accent-pink);
+  background: var(--accent-red);
   color: #fff;
   padding: 0.5rem 1rem;
   border: var(--border-thick);
@@ -512,10 +516,11 @@ body {
   position: relative;
 }
 
+/* Step1後修正: 4枚の県/業種タグは同一アピアランスに統一 (交互パターン撤廃) */
 .result-tag {
   display: inline-block;
   padding: 0.5rem 1.2rem;
-  background: var(--text-main);
+  background: var(--accent-red);
   color: #fff;
   font-family: var(--font-impact);
   font-weight: 900;
@@ -523,14 +528,7 @@ body {
   border-radius: 4px;
   margin-bottom: 1.5rem;
   transform: rotate(-2deg);
-  box-shadow: 2px 2px 0 var(--accent-pink);
-}
-
-.result-card:nth-child(even) .result-tag {
-  background: var(--accent-pink);
-  color: #fff;
-  box-shadow: 2px 2px 0 var(--primary);
-  transform: rotate(2deg);
+  box-shadow: 2px 2px 0 #111;
 }
 
 .result-card h3 {
@@ -560,7 +558,7 @@ body {
 }
 
 .result-arrow {
-  color: var(--accent-pink);
+  color: var(--accent-red);
   font-weight: 900;
   font-size: 1.5rem;
   font-family: var(--font-impact);
@@ -585,9 +583,9 @@ body {
   border-radius: 4px;
 }
 
-/* Success Story Band */
+/* Success Story Band — 大面積の赤は撤去。白地 + 赤デカ数字 (Japanet流) で強調 */
 .success-band {
-  background: var(--accent-yellow);
+  background: #fff;
   color: var(--text-main);
   padding: 4rem 0;
   text-align: center;
@@ -616,8 +614,7 @@ body {
   font-family: var(--font-impact);
   font-weight: 900;
   font-size: 3.5rem;
-  color: var(--primary);
-  text-shadow: 3px 3px 0 #111;
+  color: var(--accent-red);
   display: block;
 }
 
@@ -683,7 +680,7 @@ body {
 .support-answer .brother-icon {
   width: 70px;
   height: 70px;
-  background: var(--accent-pink);
+  background: var(--accent-red);
   border-radius: 12px;
   border: var(--border-thick);
   flex-shrink: 0;
@@ -834,7 +831,7 @@ body {
   border-radius: 20px;
   border: 4px solid #fff;
   max-width: 800px;
-  box-shadow: 8px 8px 0 var(--accent-pink);
+  box-shadow: 8px 8px 0 var(--accent-red);
   transform: rotate(1deg);
 }
 
@@ -847,7 +844,7 @@ body {
   padding: 0.8rem 1.8rem;
   border: var(--border-thick);
   border-radius: 12px;
-  box-shadow: 4px 4px 0 var(--accent-yellow);
+  box-shadow: 4px 4px 0 var(--accent-red);
   margin: 0;
 }
 
@@ -893,7 +890,7 @@ body {
 }
 
 .cta-bubble {
-  background: var(--accent-yellow);
+  background: var(--accent-red);
   color: #fff;
   padding: 1.2rem 2.5rem;
   border-radius: 50px;
@@ -1016,13 +1013,13 @@ body {
     bottom: 22%;
     max-width: 82%;
     padding-left: max(1.5rem, 5%);
-    box-shadow: 0 7px 0 var(--accent-yellow);
+    box-shadow: 0 7px 0 var(--accent-red);
   }
   .hero-line:nth-child(2) {
     bottom: 4%;
     max-width: 82%;
     padding-right: max(1.5rem, 5%);
-    box-shadow: 0 -7px 0 var(--accent-pink);
+    box-shadow: 0 -7px 0 var(--primary);
   }
   .hero-number { font-size: 2.1rem; }
   /* モバイル: 帯の隙間が狭すぎるので CTA は帯の上(upper 40%付近)へ */
@@ -1057,8 +1054,8 @@ body {
   .section-title { font-size: 2.2rem; }
   .hero { align-items: flex-start; padding-top: calc(var(--header-height) + 2rem); }
   .hero-line { font-size: 1.15rem; padding: 0.8rem 1.2rem; }
-  .hero-line:nth-child(1) { bottom: 20%; max-width: 90%; box-shadow: 0 5px 0 var(--accent-yellow); }
-  .hero-line:nth-child(2) { bottom: 2%; max-width: 90%; box-shadow: 0 -5px 0 var(--accent-pink); }
+  .hero-line:nth-child(1) { bottom: 20%; max-width: 90%; box-shadow: 0 5px 0 var(--accent-red); }
+  .hero-line:nth-child(2) { bottom: 2%; max-width: 90%; box-shadow: 0 -5px 0 var(--primary); }
   .hero-number { font-size: 1.6rem; }
   .hero-btns { bottom: 44%; }
   .btn-hero-cta { font-size: 1.3rem; padding: 1.2rem 2rem; flex-direction: row; text-align: center; border-radius: 50px; gap: 0.8rem; }

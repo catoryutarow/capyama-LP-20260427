@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Screenshot / working artifacts
+step*.png
+.playwright-mcp/
