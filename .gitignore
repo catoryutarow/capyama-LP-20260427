@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Screenshot / working artifacts
-step*.png
+# Screenshot / working artifacts (playwright etc)
+/*.png
 .playwright-mcp/

@@ -1,6 +1,12 @@
 import './style.css'
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Section title: Japanet recipe の 2層構造用に data-text を自動付与
+    // (innerText で <br> → 改行 が保持されるので、CSS側の white-space: pre と組み合わせて二層が完全一致する)
+    document.querySelectorAll('.section-title').forEach(el => {
+        el.setAttribute('data-text', el.innerText);
+    });
+
     // Reveal Animations using Intersection Observer
     const revealElements = document.querySelectorAll('.reveal');
     const revealOptions = {
