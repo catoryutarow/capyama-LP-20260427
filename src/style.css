@@ -536,6 +536,7 @@ body {
   font-weight: 800;
   margin-bottom: 1.5rem;
   line-height: 1.5;
+  text-wrap: balance; /* 2行目が極端に短い孤立行(orphan)になるのを防ぐ。4枚の見出しの改行位置を揃える */
 }
 
 .result-data {
@@ -552,7 +553,6 @@ body {
 .result-data .before {
   color: var(--text-muted);
   font-size: 1.1rem;
-  text-decoration: line-through;
   font-weight: 700;
 }
 
@@ -571,16 +571,6 @@ body {
   line-height: 1;
   display: inline-block;
   transform: skewX(-7deg);
-}
-
-.result-period {
-  font-size: 1rem;
-  color: var(--text-main);
-  font-weight: 800;
-  background: #fff;
-  padding: 0.2rem 0.5rem;
-  border: 2px solid #111;
-  border-radius: 4px;
 }
 
 /* Success Story Band — 大面積の赤は撤去。白地 + 赤デカ数字 (Japanet流) で強調 */
