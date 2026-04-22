@@ -696,59 +696,121 @@ body {
   font-weight: 600;
 }
 
-/* YouTube Section */
-.youtube-grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 3rem;
-  margin-bottom: 4rem;
-}
-
-.video-placeholder {
-  background: #111;
-  border-radius: 2px;
-  overflow: hidden;
+/* ======================================================================
+   YouTube Section: Swiper カルーセル (ビルド時 fetch-youtube.js で取得)
+   ====================================================================== */
+.youtube-carousel {
   position: relative;
-  border: var(--border-thick);
+  padding: 0 3.5rem; /* 矢印ボタンのスペース */
 }
 
-.main-video { aspect-ratio: 16/9; }
-.small-video { aspect-ratio: 16/9; width: 140px; flex-shrink: 0; border-width: 2px; }
+.youtube-swiper {
+  overflow: hidden;
+}
 
-.video-title {
+.video-card {
+  display: block;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+  height: 100%;
+}
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.video-thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+.video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 再生ボタン (YouTube 赤の三角をサムネ中央に) */
+.video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 64px;
+  text-align: center;
+  border-radius: 50%;
+  transition: background 0.18s ease-out;
+}
+.video-card:hover .video-play {
+  background: var(--youtube-red);
+}
+
+.video-card-title {
   font-family: var(--font-sans);
   font-weight: 800;
-  font-size: 1.2rem;
-  margin-top: 1.5rem;
-  background: #fff;
-  padding: 1rem;
-  border: 2px solid #111;
-  border-radius: 8px;
-}
-
-.youtube-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.video-item {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-  background: #fff;
-  padding: 1rem;
-  border: var(--border-thick);
-  border-radius: 8px;
-  box-shadow: var(--shadow-solid-sm);
-  transition: var(--transition-fast);
-}
-.video-item:hover { transform: translateX(5px); }
-
-.video-item-title {
   font-size: 0.95rem;
-  font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.45;
+  padding: 0.9rem 1rem 1rem;
+  /* 2行で省略 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Swiper 既定の青矢印 → ブランド赤の丸ボタンに */
+.youtube-nav-prev,
+.youtube-nav-next {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-red);
+  border-radius: 50%;
+  top: calc(50% - 22px - 2rem); /* ページネーションぶん少し上げる */
+  margin-top: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease-out, background 0.15s ease-out;
+}
+.youtube-nav-prev { left: 0; }
+.youtube-nav-next { right: 0; }
+.youtube-nav-prev:hover,
+.youtube-nav-next:hover {
+  transform: scale(1.08);
+  background: #C91A1A;
+}
+.youtube-nav-prev::after,
+.youtube-nav-next::after {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #fff;
+}
+
+/* ページネーションのドット色をブランド赤に */
+.youtube-pagination {
+  position: static;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.youtube-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background: var(--text-muted);
+  opacity: 0.35;
+  transition: opacity 0.15s, background 0.15s;
+}
+.youtube-pagination .swiper-pagination-bullet-active {
+  background: var(--accent-red);
+  opacity: 1;
 }
 
 /* Profile Section */
@@ -866,7 +928,16 @@ body {
   bottom: 2rem;
   right: 2rem;
   z-index: 999;
-  transition: var(--transition-fast);
+  /* opacity は既存の .active 切替で管理、transform はフッター緑ボタンへのドッキング用
+     イージングは "慣性付き追従" の心地よさを出すために cubic-bezier を使う */
+  transition: opacity 0.3s ease-out, transform 0.45s cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+/* Floating CTA のドック先スロット: 視覚的には空、サイズだけ確保 */
+.footer-cta-wrap {
+  width: 260px;
+  height: 65px;
+  /* 元の緑ボタンは撤去済み。視覚は floating CTA がドックして埋める */
 }
 
 /* Step2.5: floating CTA も画像 (透過PNG) を投下状態で表示。
@@ -1019,7 +1090,9 @@ body {
   .company-card { transform: none !important; } /* Disable rotation on mobile */
   .results-grid { grid-template-columns: 1fr; }
   .support-grid { grid-template-columns: 1fr; }
-  .youtube-grid { grid-template-columns: 1fr; }
+  .youtube-carousel { padding: 0 1rem; }
+  .youtube-nav-prev,
+  .youtube-nav-next { display: none; } /* モバイルはスワイプで */
   .stat-grid { flex-direction: column; gap: 2rem; }
   .stat-item { transform: none !important; }
   .profile-content { flex-direction: column; text-align: center; }

@@ -215,27 +215,16 @@
           <span class="section-label">Knowledge Hub</span>
           <h2 class="section-title">YouTubeで<br>ノウハウをのぞき見</h2>
         </div>
-        <div class="youtube-grid">
-          <div class="youtube-main">
-            <div class="video-placeholder main-video">
-              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/7vrOC6UBZac" title="オンラインショップにセンスは要らない！必要なのは〇〇だけ【質問対応】" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border: none;"></iframe>
-            </div>
-            <p class="video-title">オンラインショップにセンスは要らない！必要なのは〇〇だけ【質問対応】</p>
-          </div>
-          <div class="youtube-list">
-            <div class="video-item">
-              <div class="video-placeholder small-video">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/B86ljZYJIv0" title="【最強】爆売れチーズケーキ屋のEC戦略を徹底分析！" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border: none;"></iframe>
-              </div>
-              <p class="video-item-title">【最強】爆売れチーズケーキ屋のEC戦略を徹底分析！【楽天商品紹介ページ分析 #2】</p>
-            </div>
-            <div class="video-item">
-              <div class="video-placeholder small-video">
-                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/GqgWsXFUYAw" title="【疑惑】うなぎを売っているのにうなぎ屋じゃないかも?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="border: none;"></iframe>
-              </div>
-              <p class="video-item-title">【疑惑】うなぎを売っているのにうなぎ屋じゃないかも?【楽天商品紹介ページ分析#1】</p>
+        <!-- ビルド時に scripts/fetch-youtube.js が取得した動画を main.js が差し込む -->
+        <div class="youtube-carousel reveal">
+          <div class="swiper youtube-swiper">
+            <div class="swiper-wrapper" id="youtube-slides">
+              <!-- slides injected by JS -->
             </div>
           </div>
+          <button class="swiper-button-prev youtube-nav-prev" aria-label="前の動画"></button>
+          <button class="swiper-button-next youtube-nav-next" aria-label="次の動画"></button>
+          <div class="swiper-pagination youtube-pagination"></div>
         </div>
 
       </div>
@@ -266,9 +255,8 @@
         <p class="footer-tagline">あなたのECに革命を起こす伴走型パートナー。</p>
         <p class="footer-note">まずはお気軽に！</p>
         
-        <div class="footer-cta-wrap">
-          <a href="https://spollup.jp/contact/" target="_blank" rel="noopener noreferrer" class="btn btn-primary">お問い合わせ</a>
-        </div>
+        <!-- 空のドックスロット: 緑ボタンは撤去し、floating CTA がここに着地するだけ -->
+        <div class="footer-cta-wrap" aria-hidden="true"></div>
 
         <div class="social-links">
            <a href="https://www.youtube.com/@cap-yamamoto" target="_blank" rel="noopener noreferrer" class="social-link" title="YouTube">

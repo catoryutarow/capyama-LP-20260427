@@ -5,10 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "fetch:videos": "node scripts/fetch-youtube.js",
+    "prebuild": "npm run fetch:videos",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
     "vite": "^8.0.0"
+  },
+  "dependencies": {
+    "swiper": "^12.1.3"
   }
 }
