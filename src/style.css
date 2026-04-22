@@ -93,92 +93,53 @@ body {
 }
 
 /* ======================================================================
-   Section Title: Japanet 大見出し公式レシピ (2層構造で食い込み完全排除)
-   背面(::before): 同じ文字を -webkit-text-stroke で白フチ描画
-   前面(main)   : 赤グラデ塗り (background-clip:text)
-   → 前面が背面の内側半分を完全に覆い隠すので、外側オンリー白フチが確実に残る
+   Section Title: ソリッドバンド (青 or 緑) + 白イタリック太ゴシック
+   主役は "数字" (月商/年数/社数) に譲り、見出しは帯の脇役に降格。
+   スポルアップの話 = 濃緑帯、山本の話 = 青帯 (ブランド識別)
    ====================================================================== */
-/* 描画レイヤー (3層構造):
-   最背面 ::after  = 太い黒ストローク (12px) → 外側2pxが黒い細縁として残る
-   中間   main    = 白ベタ + 白ストローク 8px → 分厚い白いグリフ
-   最前面 ::before = 赤グラデ塗り → 中間の内側を覆う
-   ドロップ影 = filter: drop-shadow でふわっと全体に */
 .section-title {
-  position: relative;
+  /* block + width:fit-content + margin:auto で:
+     - 独立した行 (section-label と横並びにならない)
+     - 幅は中身 + padding ぶんだけの帯
+     - 水平中央揃え */
+  display: block;
+  width: fit-content;
   font-family: var(--font-impact);
-  font-size: 3.4rem;
+  font-size: 2.6rem;
   font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  margin-bottom: 1.25rem;
-  padding: 1.5rem 2rem 0.5rem;
-
-  /* 中間層: 白ベタ + 太白ストローク */
+  line-height: 1.35;
+  letter-spacing: 0.04em;
   color: #fff;
-  -webkit-text-stroke: 8px #fff;
-  background: transparent;
+  background: var(--primary); /* default: 青 = 山本 */
+  padding: 0.6rem 1.8rem;
+  margin: 0 auto 1.25rem;
+  transform: skewX(-7deg);
+  text-align: center; /* <br>を含むタイトル内の行も中央寄せ */
+}
 
-  /* ふわっとしたドロップ影 (ハードオフセット廃止) */
-  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.3));
+/* スポルアップの話は濃緑帯
+   (--brand-green #4ADE80 は白字でコントラスト不足 → 帯専用の濃緑を使用) */
+#company .section-title,
+#results .section-title {
+  background: #0F8E3E;
+}
 
-  /* シアー */
+/* 帯の中の数字: 赤・フラット (Japanet式デカ赤数字、他の強調数字と同系)
+   font-style: normal で <em> デフォルトの italic を打ち消し、skewX だけで傾ける */
+.hero-number {
+  display: inline-block;
+  font-family: var(--font-impact);
+  font-weight: 900;
+  font-style: normal;
+  font-size: 3.6rem;
+  color: var(--accent-red);
+  -webkit-text-stroke: 1px var(--accent-red);
+  letter-spacing: -0.02em;
+  padding: 0 0.1em;
+  vertical-align: -0.1em;
+  line-height: 1;
   transform: skewX(-7deg);
 }
-
-/* 最背面レイヤー: 黒細縁 (白縁の外側2pxだけ見える太さに調整) */
-.section-title::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  padding: inherit;
-  text-align: inherit;
-  white-space: pre;
-  line-height: inherit;
-  letter-spacing: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  -webkit-text-stroke: 10px #111; /* 白縁8pxとの差分2px→1pxで細縁に */
-  color: transparent;
-  z-index: -1;
-  background: transparent;
-  -webkit-background-clip: unset;
-  background-clip: unset;
-}
-
-/* 最前面レイヤー: 赤グラデ塗り */
-.section-title::before {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  padding: inherit;
-  text-align: inherit;
-  white-space: pre;
-  line-height: inherit;
-  letter-spacing: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  background: linear-gradient(180deg, #FF5E5E 0%, #D52538 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-stroke: 0;
-}
-
-.bg-soft .section-title {
-  color: #fff;
-}
-
-/* Step2.5: 全セクション title を --font-display (Dela Gothic One) に統一 */
 
 /* .japanese は section-header の子(section-title の兄弟) */
 .section-header .japanese,
@@ -421,24 +382,6 @@ body {
   text-align: right;
   padding-right: max(2.5rem, 5%);
   box-shadow: 0 -10px 0 var(--primary);
-}
-
-/* 帯の中の数字: 赤・フラット (Japanet式デカ赤数字)
-   text-stroke で光学重量を1段ブースト、字間詰めで "塊" 感
-   + シアーで "走り書きっぽいダサさ" を上乗せ */
-.hero-number {
-  font-family: var(--font-impact);
-  font-weight: 900;
-  font-size: 3.6rem;
-  font-style: normal;
-  color: var(--accent-red);
-  -webkit-text-stroke: 1px var(--accent-red);
-  letter-spacing: -0.02em;
-  padding: 0 0.1em;
-  display: inline-block;
-  vertical-align: -0.1em;
-  line-height: 1;
-  transform: skewX(-7deg);
 }
 
 .hero-subtitle {
