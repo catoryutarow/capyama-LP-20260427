@@ -8,14 +8,16 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
   </head>
   <body>
     <!-- Header -->
     <header class="header">
       <div class="header-inner">
         <div class="logo">
-          <a href="#">キャプテン山本/山本慎二郎</a>
+          <a href="#" aria-label="キャプテン山本 / 山本慎二郎">
+            <img src="/captain-logo.png" alt="キャプテン山本">
+          </a>
         </div>
         <nav class="nav">
           <ul class="nav-list">
@@ -34,17 +36,16 @@
       <div class="hero-bg">
         <img src="/yamamoto_fv.png" alt="キャプテン山本/山本慎二郎">
       </div>
+      <!-- タイトル(2行)は h1 として hero 直下に置き、フルブリード帯で配置 -->
+      <h1 class="hero-title">
+        <span class="hero-line">楽天・Amazon支援 <em class="hero-number">230社</em> 以上のノウハウ</span>
+        <span class="hero-line">月商を最大 <em class="hero-number">30倍</em> まで押し上げる成長戦略</span>
+      </h1>
       <div class="container hero-inner">
         <div class="hero-content">
-          <h1 class="hero-title">
-            <span class="title-line">ECに必要なことは、<br class="sp-only">たくさんある。</span>
-            <span class="title-line">一つ一つ見極め、<br class="sp-only">確実にやりきる！</span>
-          </h1>
-          <p class="hero-subtitle">あなたのお店の商品、インターネットで今の何倍も売りましょう。</p>
           <div class="hero-btns">
             <a href="https://spollup.jp/contact/" target="_blank" rel="noopener noreferrer" class="btn-hero-cta">
-              <span class="btn-badge">今なら</span>
-              <span class="btn-label">お問い合わせはこちら</span>
+              <span class="btn-label">お問い合わせ</span>
               <span class="btn-arrow">→</span>
             </a>
           </div>
@@ -213,7 +214,7 @@
     </section>
 
     <!-- YouTube Knowledge Hub -->
-    <section id="youtube" class="section bg-soft">
+    <section id="youtube" class="section">
       <div class="container">
         <div class="section-header reveal">
           <span class="section-label">Knowledge Hub</span>
@@ -264,7 +265,9 @@
     <!-- 4. Safety & 5. Conclusion (Footer/Contact) -->
     <footer id="contact" class="footer">
       <div class="container footer-content-compact">
-        <h2 class="footer-logo">キャプテン山本/山本慎二郎</h2>
+        <h2 class="footer-logo">
+          <img src="/captain-logo.png" alt="キャプテン山本">
+        </h2>
         <p class="footer-tagline">あなたのECに革命を起こす伴走型パートナー。</p>
         <p class="footer-note">まずはお気軽に！</p>
         

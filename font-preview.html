@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>フォント比較プレビュー | キャプテン山本LP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Reggae+One&family=RocknRoll+One&family=Potta+One&family=Zen+Maru+Gothic:wght@400;500;700;900&family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --border: 3px solid #111;
+        --shadow-md: 4px 4px 0 #111;
+        --shadow-lg: 8px 8px 0 #111;
+        --yellow: #FFDE00;
+        --orange: #E85A1C;
+        --pink: #FF66B2;
+        --blue: #0071C5;
+        --sans: 'Zen Maru Gothic', sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: var(--sans);
+        color: #111;
+        background: var(--blue);
+        background-image:
+          linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
+        background-size: 30px 30px;
+        line-height: 1.7;
+        padding: 3rem 1.5rem 6rem;
+      }
+      .page-header {
+        max-width: 1000px;
+        margin: 0 auto 3rem;
+        padding: 2rem;
+        background: #fff;
+        border: var(--border);
+        box-shadow: var(--shadow-lg);
+        border-radius: 14px;
+      }
+      .page-header h1 {
+        font-family: 'Zen Maru Gothic', sans-serif;
+        font-weight: 900;
+        font-size: 1.8rem;
+        margin-bottom: .5rem;
+      }
+      .page-header p { font-size: .95rem; color: #444; }
+      .toc {
+        max-width: 1000px;
+        margin: 0 auto 2rem;
+        display: flex;
+        gap: .5rem;
+        flex-wrap: wrap;
+      }
+      .toc a {
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+        font-weight: 900;
+        padding: .5rem 1rem;
+        background: var(--yellow);
+        color: #111;
+        border: var(--border);
+        border-radius: 50px;
+        font-size: .9rem;
+        text-decoration: none;
+        box-shadow: var(--shadow-md);
+        transition: transform .15s, box-shadow .15s;
+      }
+      .toc a:hover { transform: translate(2px,2px); box-shadow: 2px 2px 0 #111; }
+      .grid {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+      }
+      .card {
+        background: #fff;
+        border: var(--border);
+        box-shadow: var(--shadow-lg);
+        border-radius: 14px;
+        padding: 2rem;
+        scroll-margin-top: 1rem;
+      }
+      .card-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .font-name {
+        font-size: 1.6rem;
+        padding: .3rem 1rem;
+        background: var(--yellow);
+        border: var(--border);
+        border-radius: 8px;
+        box-shadow: var(--shadow-md);
+      }
+      .badge {
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+        font-weight: 900;
+        font-size: .75rem;
+        padding: .3rem .7rem;
+        border-radius: 50px;
+        border: 2px solid #111;
+        background: #eee;
+      }
+      .badge.baseline { background: #ddd; }
+      .badge.recommend { background: var(--pink); color: #fff; text-shadow: 1px 1px 0 #111; }
+      .desc { font-size: .95rem; color: #333; margin-bottom: 1.5rem; line-height: 1.7; }
+
+      .samples {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background: #f7f7f2;
+        border: 2px dashed #bbb;
+        border-radius: 10px;
+      }
+      .sample-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: .75rem 1.25rem;
+      }
+      .sample-label {
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+        font-weight: 900;
+        font-size: .7rem;
+        color: #666;
+        text-transform: uppercase;
+        min-width: 70px;
+        letter-spacing: .08em;
+      }
+      .sample-content { font-family: var(--this-font); font-weight: var(--this-weight, 400); }
+
+      .s-hero {
+        font-size: 2.6rem;
+        background: var(--pink);
+        color: #fff;
+        padding: .3rem 1rem;
+        border: var(--border);
+        border-radius: 8px;
+        text-shadow: 2px 2px 0 #111;
+        line-height: 1.3;
+      }
+      .s-title { font-size: 2.4rem; line-height: 1.3; color: #111; }
+      .s-title-white {
+        font-size: 2rem;
+        line-height: 1.3;
+        background: var(--blue);
+        color: #fff;
+        padding: .4rem 1rem;
+        border-radius: 6px;
+        text-shadow: 2px 2px 0 #111, -1px -1px 0 #111, 1px -1px 0 #111, -1px 1px 0 #111, 1px 1px 0 #111;
+      }
+      .s-number {
+        font-size: 3.2rem;
+        color: var(--blue);
+        text-shadow: 3px 3px 0 #111;
+        line-height: 1;
+      }
+      .s-button {
+        font-size: 1.1rem;
+        background: var(--orange);
+        color: #fff;
+        padding: .7rem 1.4rem;
+        border: var(--border);
+        border-radius: 50px;
+        text-shadow: 1px 1px 0 #111;
+        display: inline-block;
+      }
+      .s-logo {
+        font-size: 1.5rem;
+        color: var(--blue);
+        text-shadow: 2px 2px 0 #111;
+        -webkit-text-stroke: 1px #111;
+      }
+      .s-body {
+        font-size: .95rem;
+        color: #444;
+        max-width: 42em;
+        line-height: 1.8;
+      }
+
+      .pros-cons {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+      .pros, .cons {
+        padding: 1rem 1.2rem;
+        border-radius: 10px;
+        font-size: .9rem;
+        line-height: 1.7;
+        border: 2px solid;
+      }
+      .pros { background: #e8f5e9; border-color: #2e7d32; }
+      .cons { background: #ffebee; border-color: #c62828; }
+      .pros strong, .cons strong {
+        display: block;
+        margin-bottom: .3rem;
+        font-size: .8rem;
+        letter-spacing: .05em;
+      }
+      .pros strong { color: #2e7d32; }
+      .cons strong { color: #c62828; }
+
+      /* per-card font var */
+      .f-dela     { --this-font: 'Dela Gothic One', cursive; --this-weight: 400; }
+      .f-reggae   { --this-font: 'Reggae One', cursive; --this-weight: 400; }
+      .f-rocknroll{ --this-font: 'RocknRoll One', cursive; --this-weight: 400; }
+      .f-potta    { --this-font: 'Potta One', cursive; --this-weight: 400; }
+      .f-zen      { --this-font: 'Zen Maru Gothic', sans-serif; --this-weight: 900; }
+      .f-mplus    { --this-font: 'M PLUS Rounded 1c', sans-serif; --this-weight: 900; }
+
+      @media (max-width: 640px) {
+        .s-hero { font-size: 1.8rem; }
+        .s-title { font-size: 1.6rem; }
+        .s-title-white { font-size: 1.4rem; }
+        .s-number { font-size: 2.4rem; }
+        .pros-cons { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>🎯 フォント比較プレビュー</h1>
+      <p>Dela Gothic One(現行) + 読みやすい代替5案を、LPの実際の使い方（Hero / Section Title / 数字 / ボタン / ロゴ / 本文）で並べています。下のタブから直接ジャンプできます。</p>
+    </header>
+
+    <nav class="toc">
+      <a href="#dela">0. Dela Gothic One (現行)</a>
+      <a href="#reggae">1. Reggae One</a>
+      <a href="#rocknroll">2. RocknRoll One</a>
+      <a href="#potta">3. Potta One</a>
+      <a href="#zen">4. Zen Maru Gothic 900</a>
+      <a href="#mplus">5. M PLUS Rounded 1c 900</a>
+    </nav>
+
+    <main class="grid">
+
+      <!-- 0: DELA (BASELINE) -->
+      <section class="card f-dela" id="dela">
+        <div class="card-head">
+          <span class="font-name">Dela Gothic One</span>
+          <span class="badge baseline">現行 / 比較基準</span>
+        </div>
+        <p class="desc">極太の角ゴシック、ブロックブラシの趣。英字では映えるが、日本語では漢字の画数が多いと黒潰れしやすい。Regular(400)のみの単一ウェイト。</p>
+        <div class="samples">
+          <div class="sample-row"><span class="sample-label">Hero</span><span class="sample-content s-hero">ECに必要なことは、たくさんある。</span></div>
+          <div class="sample-row"><span class="sample-label">Title</span><span class="sample-content s-title-white">株式会社スポルアップの3つの特色</span></div>
+          <div class="sample-row"><span class="sample-label">Number</span><span class="sample-content s-number">230社</span></div>
+          <div class="sample-row"><span class="sample-label">Button</span><span class="sample-content s-button">お問い合わせはこちら →</span></div>
+          <div class="sample-row"><span class="sample-label">Logo</span><span class="sample-content s-logo">キャプテン山本/山本慎二郎</span></div>
+          <div class="sample-row"><span class="sample-label">Body</span><span class="sample-content s-body">注: ポップ系フォントを本文に使うのはおすすめしない。比較用サンプル。</span></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros"><strong>◎ 良い点</strong>他LPに埋もれない圧倒的インパクト。ブロック感・レトロ感。</div>
+          <div class="cons"><strong>✕ 気になる点</strong>漢字が潰れて可読性低下。ロゴ・長いタイトルで特に辛い。</div>
+        </div>
+      </section>
+
+      <!-- 1: REGGAE ONE -->
+      <section class="card f-reggae" id="reggae">
+        <div class="card-head">
+          <span class="font-name">Reggae One</span>
+          <span class="badge">Dela に最も近い</span>
+        </div>
+        <p class="desc">太さはDelaに匹敵しつつ、画の曲がりにレゲエ文字由来のリズムがある。カウンター(字の内部空間)が意図的に開けてあるため、Delaより「抜け」が良い。</p>
+        <div class="samples">
+          <div class="sample-row"><span class="sample-label">Hero</span><span class="sample-content s-hero">ECに必要なことは、たくさんある。</span></div>
+          <div class="sample-row"><span class="sample-label">Title</span><span class="sample-content s-title-white">株式会社スポルアップの3つの特色</span></div>
+          <div class="sample-row"><span class="sample-label">Number</span><span class="sample-content s-number">230社</span></div>
+          <div class="sample-row"><span class="sample-label">Button</span><span class="sample-content s-button">お問い合わせはこちら →</span></div>
+          <div class="sample-row"><span class="sample-label">Logo</span><span class="sample-content s-logo">キャプテン山本/山本慎二郎</span></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros"><strong>◎ 良い点</strong>Delaの重量感を保ちつつ、漢字の密度問題を回避。個性もキープ。</div>
+          <div class="cons"><strong>✕ 気になる点</strong>クセがそこそこ強いので、トーンがさらに「個性派」に寄る。</div>
+        </div>
+      </section>
+
+      <!-- 2: ROCKNROLL ONE -->
+      <section class="card f-rocknroll" id="rocknroll">
+        <div class="card-head">
+          <span class="font-name">RocknRoll One</span>
+          <span class="badge recommend">親しみ系おすすめ</span>
+        </div>
+        <p class="desc">角が微妙にラフ処理されたポップ体。見出し用途に設計されており、手書き感とブロック感のバランスがキレイ。「人柄ブランド」に強い。</p>
+        <div class="samples">
+          <div class="sample-row"><span class="sample-label">Hero</span><span class="sample-content s-hero">ECに必要なことは、たくさんある。</span></div>
+          <div class="sample-row"><span class="sample-label">Title</span><span class="sample-content s-title-white">株式会社スポルアップの3つの特色</span></div>
+          <div class="sample-row"><span class="sample-label">Number</span><span class="sample-content s-number">230社</span></div>
+          <div class="sample-row"><span class="sample-label">Button</span><span class="sample-content s-button">お問い合わせはこちら →</span></div>
+          <div class="sample-row"><span class="sample-label">Logo</span><span class="sample-content s-logo">キャプテン山本/山本慎二郎</span></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros"><strong>◎ 良い点</strong>ポップさを保ちつつ、漢字も判読しやすい。親しみ感が強く「キャプテン山本」の愛称にも合う。</div>
+          <div class="cons"><strong>✕ 気になる点</strong>Delaと比べると「重さ」がやや軽くなる。太字感を出すには影で補強が必要。</div>
+        </div>
+      </section>
+
+      <!-- 3: POTTA ONE -->
+      <section class="card f-potta" id="potta">
+        <div class="card-head">
+          <span class="font-name">Potta One</span>
+          <span class="badge">カートゥーン寄り</span>
+        </div>
+        <p class="desc">丸みのある大きめポップ体。"子供番組的な元気さ"が出る。開口が広いので小サイズでも崩れにくいが、BtoBトーンとは要相談。</p>
+        <div class="samples">
+          <div class="sample-row"><span class="sample-label">Hero</span><span class="sample-content s-hero">ECに必要なことは、たくさんある。</span></div>
+          <div class="sample-row"><span class="sample-label">Title</span><span class="sample-content s-title-white">株式会社スポルアップの3つの特色</span></div>
+          <div class="sample-row"><span class="sample-label">Number</span><span class="sample-content s-number">230社</span></div>
+          <div class="sample-row"><span class="sample-label">Button</span><span class="sample-content s-button">お問い合わせはこちら →</span></div>
+          <div class="sample-row"><span class="sample-label">Logo</span><span class="sample-content s-logo">キャプテン山本/山本慎二郎</span></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros"><strong>◎ 良い点</strong>開口が広く小さくても潰れない。元気な印象が強い。</div>
+          <div class="cons"><strong>✕ 気になる点</strong>ややコミカル寄り。BtoB EC経営者に届けるトーンとしては軽すぎるかも。</div>
+        </div>
+      </section>
+
+      <!-- 4: ZEN MARU GOTHIC 900 -->
+      <section class="card f-zen" id="zen">
+        <div class="card-head">
+          <span class="font-name">Zen Maru Gothic 900</span>
+          <span class="badge recommend">バランス型おすすめ</span>
+        </div>
+        <p class="desc">すでに読み込み済みの丸ゴシック(Black=900)。ポップ一歩手前の"整った丸み"で、ビジネス文脈でも安定。影や縁取りを足すことでポップに寄せられる。</p>
+        <div class="samples">
+          <div class="sample-row"><span class="sample-label">Hero</span><span class="sample-content s-hero">ECに必要なことは、たくさんある。</span></div>
+          <div class="sample-row"><span class="sample-label">Title</span><span class="sample-content s-title-white">株式会社スポルアップの3つの特色</span></div>
+          <div class="sample-row"><span class="sample-label">Number</span><span class="sample-content s-number">230社</span></div>
+          <div class="sample-row"><span class="sample-label">Button</span><span class="sample-content s-button">お問い合わせはこちら →</span></div>
+          <div class="sample-row"><span class="sample-label">Logo</span><span class="sample-content s-logo">キャプテン山本/山本慎二郎</span></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros"><strong>◎ 良い点</strong>読みやすさ◎、既に読み込み済みでフォント追加ゼロ。親しみと信頼のバランス。</div>
+          <div class="cons"><strong>✕ 気になる点</strong>Delaに比べると"整っている"ので、意図的にポップ演出(影/回転/色)で補強が必要。</div>
+        </div>
+      </section>
+
+      <!-- 5: M PLUS ROUNDED 1C 900 -->
+      <section class="card f-mplus" id="mplus">
+        <div class="card-head">
+          <span class="font-name">M PLUS Rounded 1c 900</span>
+          <span class="badge">最も汎用</span>
+        </div>
+        <p class="desc">丸ゴ系の大定番。9ウェイトあり、見出し(900)から本文まで1ファミリで揃う。ポップにもビジネスにも寄せられる万能型。</p>
+        <div class="samples">
+          <div class="sample-row"><span class="sample-label">Hero</span><span class="sample-content s-hero">ECに必要なことは、たくさんある。</span></div>
+          <div class="sample-row"><span class="sample-label">Title</span><span class="sample-content s-title-white">株式会社スポルアップの3つの特色</span></div>
+          <div class="sample-row"><span class="sample-label">Number</span><span class="sample-content s-number">230社</span></div>
+          <div class="sample-row"><span class="sample-label">Button</span><span class="sample-content s-button">お問い合わせはこちら →</span></div>
+          <div class="sample-row"><span class="sample-label">Logo</span><span class="sample-content s-logo">キャプテン山本/山本慎二郎</span></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros"><strong>◎ 良い点</strong>可読性最高。1ファミリで本文から見出しまで統一可能。配信サイズも小さい。</div>
+          <div class="cons"><strong>✕ 気になる点</strong>個性は一番弱い。「見慣れた感じ」がしてブランドの尖りはDela比で下がる。</div>
+        </div>
+      </section>
+
+    </main>
+  </body>
+</html>
