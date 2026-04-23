@@ -1051,7 +1051,11 @@ body {
 
 /* =====================================================
    Responsive Adjustments
+   Breakpoints: 1100 (desktop-S) / 1024 (tablet-L) / 900 (tablet) /
+                768 (tablet portrait) / 600 (mobile) / 414 (iPhone Pro) / 375 (SE)
    ===================================================== */
+
+/* Small desktop / large tablet: 少しずつ縮める */
 @media (max-width: 1100px) {
   .hero-line { font-size: 1.9rem; padding: 1.2rem 2rem; }
   .hero-number { font-size: 2.6rem; }
@@ -1059,69 +1063,236 @@ body {
   .profile-content { gap: 2rem; padding: 2.5rem; }
 }
 
-@media (max-width: 900px) {
-  .hero-subtitle { font-size: 1rem; }
-  /* モバイル: 横方向は中央寄り、縦は top 固定で被写体の頭をヘッダー下に保つ */
-  .hero-bg img { object-position: 70% top; }
-  .hero-line {
-    font-size: 1.5rem;
-    white-space: normal; /* 狭い幅では折り返しを許可 */
-    padding: 1rem 1.5rem;
-    line-height: 1.4;
-    border-top-width: 3px;
-    border-bottom-width: 3px;
-  }
-  .hero-line:nth-child(1) {
-    bottom: 22%;
-    max-width: 82%;
-    padding-left: max(1.5rem, 5%);
-    box-shadow: 0 7px 0 var(--accent-red);
-  }
-  .hero-line:nth-child(2) {
-    bottom: 4%;
-    max-width: 82%;
-    padding-right: max(1.5rem, 5%);
-    box-shadow: 0 -7px 0 var(--primary);
-  }
-  .hero-number { font-size: 2.1rem; }
-  /* モバイル: 帯の隙間が狭すぎるので CTA は帯の上(upper 40%付近)へ */
-  .hero-btns { bottom: 46%; }
-  .company-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .company-card { transform: none !important; } /* Disable rotation on mobile */
-  .results-grid { grid-template-columns: 1fr; }
-  .support-grid { grid-template-columns: 1fr; }
-  .youtube-carousel { padding: 0 1rem; }
-  .youtube-nav-prev,
-  .youtube-nav-next { display: none; } /* モバイルはスワイプで */
-  .stat-grid { flex-direction: column; gap: 2rem; }
-  .stat-item { transform: none !important; }
-  .profile-content { flex-direction: column; text-align: center; }
-  .profile-image-placeholder { transform: none; width: 200px; height: 200px; flex: auto; }
-  .footer-content-compact { padding: 2rem; }
-  .footer-logo { padding: 0.6rem 1.2rem; }
-  .footer-logo img { height: 40px; }
+@media (max-width: 1024px) {
+  /* YouTube 矢印を控えめに */
+  .youtube-carousel { padding: 0 3rem; }
+  .youtube-nav-prev, .youtube-nav-next { width: 40px; height: 40px; }
+  /* Stats の間隔を詰めて横並び維持 */
+  .stat-grid { gap: 2.5rem; }
+  .stat-item .number { font-size: 3.2rem; }
+}
 
+/* タブレット (iPad portrait, 大きめスマホ) */
+@media (max-width: 900px) {
+  body { font-size: 16px; }
+
+  /* --- Header: 中央ナビを隠しロゴ + お問い合わせだけ残す --- */
   .header-inner { padding: 0 4%; }
-  .logo a img { height: 32px; }
+  .logo a img { height: 36px; }
+  .nav-list { gap: 1rem; }
   .nav-list li:not(:last-child) { display: none; }
   .nav-list a {
     padding: 0.5rem 1rem;
     background: var(--accent-green);
     color: #111;
     border: 2px solid #111;
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 2px 2px 0 #111;
   }
+
+  /* --- Hero: 写真は顔を外さない位置、2つの帯をコンパクトに --- */
+  .hero { min-height: 82vh; }
+  .hero-bg img { object-position: 65% top; }
+  .hero-line {
+    font-size: 1.35rem;
+    white-space: normal;
+    padding: 0.85rem 1.3rem;
+    line-height: 1.4;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+  }
+  .hero-line:nth-child(1) {
+    bottom: 22%;
+    max-width: 88%;
+    padding-left: max(1.2rem, 4%);
+    box-shadow: 0 6px 0 var(--accent-red);
+  }
+  .hero-line:nth-child(2) {
+    bottom: 3%;
+    max-width: 88%;
+    padding-right: max(1.2rem, 4%);
+    box-shadow: 0 -6px 0 var(--primary);
+  }
+  .hero-number { font-size: 1.8rem; }
+  .hero-btns { bottom: 44%; }
+  .btn-hero-cta-img { width: 340px; }
+  .hero-subtitle { font-size: 1rem; }
+
+  /* --- Company: 2-col (タブレット縦) --- */
+  .company-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .company-card {
+    transform: none !important;
+    padding: 2.5rem 1.5rem 2rem;
+  }
+  .company-card h3 { font-size: 1.2rem; }
+  .company-card p { font-size: 1rem; }
+
+  /* --- Stats: 横並び維持で縮小 (縦列だと "スペック感" が出ない) --- */
+  .stat-grid { gap: 1.5rem; flex-direction: row; }
+  .stat-item {
+    transform: none !important;
+    padding: 1.3rem 0.8rem;
+    flex: 1;
+    text-align: center;
+  }
+  .stat-item .number { font-size: 2.6rem; }
+  .stat-item .label { font-size: 1rem; }
+
+  /* --- Results: 1-col --- */
+  .results-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .result-card { padding: 2rem 1.5rem; }
+  .result-card h3 { font-size: 1.15rem; }
+  .result-after { font-size: 1.9rem; }
+  .result-data { padding: 1.2rem; }
+
+  /* --- Support: 1-col --- */
+  .support-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .support-card { padding: 2rem 1.5rem; }
+
+  /* --- YouTube: 矢印隠す (スワイプで操作) --- */
+  .youtube-carousel { padding: 0 1rem; }
+  .youtube-nav-prev, .youtube-nav-next { display: none; }
+  .video-card-title { font-size: 0.9rem; padding: 0.8rem 0.9rem 1rem; }
+
+  /* --- Profile: 縦積み (画像→テキスト) --- */
+  .profile-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+  }
+  .profile-image-placeholder {
+    transform: none;
+    width: 200px;
+    height: 200px;
+    flex: none;
+    margin: 0 auto;
+  }
+  .profile-text { width: 100%; }
+  .profile-text .section-label {
+    margin: 0 auto 1rem;
+    display: inline-block;
+  }
+  .profile-text h3 { font-size: 1.9rem; }
+  .profile-text p {
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  /* --- Footer --- */
+  .footer { padding: 3.5rem 0 2.5rem; }
+  .footer-content-compact { padding: 2rem 1.5rem; gap: 1.5rem; }
+  .footer-logo { padding: 0.6rem 1.2rem; }
+  .footer-logo img { height: 42px; }
+  .footer-tagline { font-size: 1rem; }
 }
 
+/* タブレット縦 (iPad portrait) — Company を 1-col に */
+@media (max-width: 768px) {
+  .section { padding: 4rem 0; }
+  .company-grid { grid-template-columns: 1fr; }
+  .btn-hero-cta-img { width: 300px; }
+
+  /* Hero 帯の位置微調整 (縦長画面になるほど帯間を詰める) */
+  .hero-line:nth-child(1) { bottom: 20%; }
+  .hero-btns { bottom: 40%; }
+}
+
+/* モバイル */
 @media (max-width: 600px) {
-  .section-title { font-size: 2.2rem; }
-  .hero { align-items: flex-start; padding-top: calc(var(--header-height) + 2rem); }
-  .hero-line { font-size: 1.15rem; padding: 0.8rem 1.2rem; }
-  .hero-line:nth-child(1) { bottom: 20%; max-width: 90%; box-shadow: 0 5px 0 var(--accent-red); }
-  .hero-line:nth-child(2) { bottom: 2%; max-width: 90%; box-shadow: 0 -5px 0 var(--primary); }
-  .hero-number { font-size: 1.6rem; }
-  .hero-btns { bottom: 44%; }
-  .btn-hero-cta { font-size: 1.3rem; padding: 1.2rem 2rem; flex-direction: row; text-align: center; border-radius: 4px; gap: 0.8rem; }
-  .btn-hero-cta .btn-arrow { transform: none; margin: 0; font-size: 1.5rem; }
+  .section-title { font-size: 2rem; padding: 0.5rem 1.3rem; }
+
+  /* --- Hero: 薄く短く、帯はほぼフル幅 --- */
+  .hero { min-height: 75vh; align-items: flex-start; padding-top: calc(var(--header-height) + 2rem); }
+  .hero-line {
+    font-size: 1.05rem;
+    padding: 0.65rem 1rem;
+  }
+  .hero-line:nth-child(1) { bottom: 18%; max-width: 93%; box-shadow: 0 4px 0 var(--accent-red); }
+  .hero-line:nth-child(2) { bottom: 2%; max-width: 93%; box-shadow: 0 -4px 0 var(--primary); }
+  .hero-number { font-size: 1.4rem; }
+  .hero-btns { bottom: 36%; }
+  .btn-hero-cta-img { width: 260px; }
+
+  /* Stats: 3列のまま最小に (小スマホでも横並びを維持) */
+  .stat-grid { gap: 0.5rem; }
+  .stat-item { padding: 0.9rem 0.4rem; }
+  .stat-item .number { font-size: 1.9rem; }
+  .stat-item .label { font-size: 0.8rem; letter-spacing: -0.02em; }
+
+  /* Company */
+  .company-card { padding: 2.5rem 1.2rem 1.5rem; }
+  .company-card h3 { font-size: 1.1rem; }
+  .company-card p { font-size: 0.95rem; }
+  .company-card .number { font-size: 2rem; top: -16px; left: -10px; }
+
+  /* Results */
+  .result-card { padding: 1.5rem 1.2rem; }
+  .result-card h3 { font-size: 1.05rem; }
+  .result-after { font-size: 1.55rem; }
+  .result-data { padding: 1rem; gap: 0.5rem; }
+  .result-arrow { font-size: 1.2rem; }
+  .result-data .before { font-size: 0.95rem; }
+  .result-tag { font-size: 0.8rem; padding: 0.4rem 0.9rem; }
+
+  /* Support */
+  .support-card { padding: 1.5rem 1.2rem; }
+  .support-question { font-size: 0.95rem; padding: 1rem 1.2rem; }
+  .support-answer { gap: 1rem; }
+  .support-answer .brother-icon { width: 48px; height: 48px; }
+  .support-answer-text h4 { font-size: 1rem; }
+  .support-answer-text p { font-size: 0.95rem; }
+
+  /* YouTube card title: 行詰め */
+  .video-card-title { font-size: 0.85rem; padding: 0.7rem 0.8rem 0.9rem; }
+  .video-play { width: 52px; height: 52px; line-height: 52px; font-size: 1.2rem; }
+
+  /* Profile */
+  .profile-content { padding: 1.5rem 1rem; }
+  .profile-image-placeholder { width: 160px; height: 160px; }
+  .profile-text h3 { font-size: 1.6rem; }
+  .profile-text p { font-size: 0.95rem; }
+
+  /* Footer */
+  .footer { padding: 2.5rem 0 1.8rem; }
+  .footer-content-compact { padding: 1.5rem 1rem; gap: 1.2rem; }
+  .footer-logo { padding: 0.5rem 1rem; }
+  .footer-logo img { height: 32px; }
+  .footer-tagline { font-size: 0.95rem; }
+  .footer-note { font-size: 0.9rem; }
+  .social-link { width: 44px; height: 44px; }
+  .social-link svg { width: 20px; height: 20px; }
+  .footer-bottom { font-size: 0.75rem; margin-top: 2rem; }
+
+  /* Floating CTA: 小さく & 角近くへ */
+  .floating-cta { bottom: 1rem; right: 1rem; }
+  .cta-bubble-img { width: 180px; }
+}
+
+/* iPhone Pro 前後 */
+@media (max-width: 414px) {
+  .hero-line { font-size: 0.95rem; padding: 0.55rem 0.9rem; }
+  .hero-number { font-size: 1.25rem; }
+  .hero-btns { bottom: 34%; }
+  .btn-hero-cta-img { width: 240px; }
+  .section-title { font-size: 1.7rem; }
+  .stat-item .number { font-size: 1.65rem; }
+  .stat-item .label { font-size: 0.72rem; }
+  .result-after { font-size: 1.35rem; }
+  .cta-bubble-img { width: 160px; }
+}
+
+/* iPhone SE / 最小クラス */
+@media (max-width: 375px) {
+  .hero-line { font-size: 0.88rem; padding: 0.5rem 0.75rem; }
+  .hero-line:nth-child(1) { max-width: 95%; }
+  .hero-line:nth-child(2) { max-width: 95%; }
+  .hero-number { font-size: 1.15rem; }
+  .btn-hero-cta-img { width: 210px; }
+  .section-title { font-size: 1.5rem; padding: 0.45rem 1.1rem; }
+  .section-label { font-size: 0.9rem; padding: 0.4rem 1rem; }
+  .stat-item .number { font-size: 1.5rem; }
+  .stat-item .label { font-size: 0.68rem; }
+  .result-after { font-size: 1.2rem; }
+  .cta-bubble-img { width: 140px; }
 }
