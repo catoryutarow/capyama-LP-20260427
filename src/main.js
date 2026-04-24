@@ -105,12 +105,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // 基準位置そのものの計算には使えない。
     function computeFloatingBaseCenter() {
         if (!floatingCta) return null;
-        const margin = 32; // 2rem
+        // CSS の right/bottom を実測で読む。
+        // デスクトップは 2rem、モバイル breakpoint で 1rem に切り替わるため
+        // ハードコードではズレる (ドック位置が左下に流れる)
+        const cs = getComputedStyle(floatingCta);
+        const rightPx = parseFloat(cs.right) || 0;
+        const bottomPx = parseFloat(cs.bottom) || 0;
         const w = floatingCta.offsetWidth;
         const h = floatingCta.offsetHeight;
         return {
-            cx: window.innerWidth - margin - w / 2,
-            cy: window.innerHeight - margin - h / 2,
+            cx: window.innerWidth - rightPx - w / 2,
+            cy: window.innerHeight - bottomPx - h / 2,
         };
     }
 

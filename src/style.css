@@ -51,6 +51,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* reveal アニメの translate(±120px) が一時的に画面外にはみ出す時
+     ここで clip しないと body の overflow-x: hidden だけでは html 側で
+     水平スクロールが発生し、position:fixed 要素の基準がズレて見える */
+  overflow-x: clip;
 }
 
 a {
@@ -447,6 +451,10 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
+  /* reveal アニメで card が translate(-120px, 0) から始まるので
+     grid 側で clip して画面外にはみ出さないようにする */
+  overflow: clip;
+  padding: 0.5rem; /* 影が切れないよう少し余白 */
 }
 
 .company-card {
@@ -506,6 +514,8 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 3rem;
+  overflow: clip;
+  padding: 0.5rem;
 }
 
 .result-card {
@@ -620,6 +630,8 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 3rem;
   margin-top: 2rem;
+  overflow: clip;
+  padding: 0.5rem;
 }
 
 .support-card {
@@ -963,7 +975,8 @@ body {
 .cta-bubble-img {
   display: block;
   width: 260px;
-  max-width: 60vw;
+  /* 2rem右マージン + CTAサイズ がビューポートをはみ出さないよう max-width を二重ガード */
+  max-width: min(60vw, calc(100vw - 5rem));
   height: auto;
 }
 
@@ -1076,22 +1089,15 @@ body {
 @media (max-width: 900px) {
   body { font-size: 16px; }
 
-  /* --- Header: 中央ナビを隠しロゴ + お問い合わせだけ残す --- */
+  /* --- Header: モバイルはロゴのみ (ナビ全撤去) で写真との視覚干渉を最小化 --- */
   .header-inner { padding: 0 4%; }
-  .logo a img { height: 36px; }
-  .nav-list { gap: 1rem; }
-  .nav-list li:not(:last-child) { display: none; }
-  .nav-list a {
-    padding: 0.5rem 1rem;
-    background: var(--accent-green);
-    color: #111;
-    border: 2px solid #111;
-    border-radius: 4px;
-    box-shadow: 2px 2px 0 #111;
-  }
+  .logo a img { height: 32px; }
+  .nav-list { display: none; }
 
   /* --- Hero: 写真は顔を外さない位置、2つの帯をコンパクトに --- */
   .hero { min-height: 82vh; }
+  /* モバイルはfixedヘッダーが写真の頭にかぶるので、bg領域をヘッダー下から開始 */
+  .hero-bg { top: var(--header-height); }
   .hero-bg img { object-position: 65% top; }
   .hero-line {
     font-size: 1.35rem;
@@ -1211,8 +1217,10 @@ body {
   .hero-line:nth-child(1) { bottom: 18%; max-width: 93%; box-shadow: 0 4px 0 var(--accent-red); }
   .hero-line:nth-child(2) { bottom: 2%; max-width: 93%; box-shadow: 0 -4px 0 var(--primary); }
   .hero-number { font-size: 1.4rem; }
-  .hero-btns { bottom: 36%; }
-  .btn-hero-cta-img { width: 260px; }
+  /* SP は hero の CTA を撤去 (floating CTA が下から出るので冗長)
+     写真の胸元にピル画像が被らず、顔+帯の構図に集中させる */
+  .hero-btns { display: none; }
+  .btn-hero-cta-img { width: 260px; } /* 念のため残すが display:none で非表示 */
 
   /* Stats: 3列のまま最小に (小スマホでも横並びを維持) */
   .stat-grid { gap: 0.5rem; }
@@ -1264,8 +1272,7 @@ body {
   .social-link svg { width: 20px; height: 20px; }
   .footer-bottom { font-size: 0.75rem; margin-top: 2rem; }
 
-  /* Floating CTA: 小さく & 角近くへ */
-  .floating-cta { bottom: 1rem; right: 1rem; }
+  /* Floating CTA: 画像サイズのみ縮小 (bottom/right は base の 2rem を維持) */
   .cta-bubble-img { width: 180px; }
 }
 
@@ -1284,6 +1291,7 @@ body {
 
 /* iPhone SE / 最小クラス */
 @media (max-width: 375px) {
+  .logo a img { height: 28px; }
   .hero-line { font-size: 0.88rem; padding: 0.5rem 0.75rem; }
   .hero-line:nth-child(1) { max-width: 95%; }
   .hero-line:nth-child(2) { max-width: 95%; }
