@@ -1063,6 +1063,238 @@ body {
 }
 
 /* =====================================================
+   Step 3: Cutout + Speech Bubble — チラシ風装飾パーツ
+   ---------------------------------------------------------
+   写真はまだ白背景 JPG のままなので mix-blend-mode: multiply で
+   "擬似切り抜き" を作る。白(255,255,255)は下地と乗算で下地そのまま
+   になるので、白背景セクションではほぼ透明に見える。ユーザーが後で
+   透明 PNG に差し替えた時は、.cutout の mix-blend-mode を normal に
+   戻すだけで本番品質へ移行できる。
+   data-pose 属性をつけると、モック段階でポーズ名が赤ラベルとして
+   自動表示される → ユーザーが切り抜き作業する際にどの写真を充てるか
+   迷わない。差し替え完了時に data-pose を外せばラベルは消える。
+   ===================================================== */
+
+.cutout {
+  display: block;
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+  /* 白背景のグレー残差を飛ばし、より切り抜きぽく */
+  filter: contrast(1.04) brightness(1.02);
+}
+
+/* 濃色地(フッター青等)に置く時用: 白ポラロイド風フレーム */
+.cutout--framed {
+  mix-blend-mode: normal;
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 0.35rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.cutout-slot {
+  position: relative;
+  line-height: 0;
+  display: inline-block;
+}
+
+/* data-pose="ポーズ名" が付いていればラベル自動表示 (開発モック用) */
+.cutout-slot[data-pose]::after {
+  content: attr(data-pose);
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background: rgba(214, 40, 40, 0.92);
+  color: #fff;
+  font-family: var(--font-impact);
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 0.25em 0.65em;
+  border-radius: 3px;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  line-height: 1.4;
+  z-index: 3;
+}
+
+/* ===== Speech Bubble (吹き出し) ===== */
+.speech-bubble {
+  position: relative;
+  display: inline-block;
+  background: #fff;
+  border: 3px solid var(--primary);
+  border-radius: 1rem;
+  padding: 0.55em 1.05em;
+  font-family: var(--font-impact);
+  font-weight: 900;
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  color: var(--primary);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  white-space: nowrap;
+}
+
+.speech-bubble--red {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+/* 尻尾: 左向き (吹き出しが被写体の右側) */
+.speech-bubble--tail-left::before,
+.speech-bubble--tail-left::after {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+}
+.speech-bubble--tail-left::before {
+  border-width: 10px 16px 10px 0;
+  border-color: transparent var(--primary) transparent transparent;
+}
+.speech-bubble--tail-left::after {
+  left: -12px;
+  border-width: 8px 13px 8px 0;
+  border-color: transparent #fff transparent transparent;
+}
+.speech-bubble--red.speech-bubble--tail-left::before {
+  border-right-color: var(--accent-red);
+}
+
+/* 尻尾: 右向き */
+.speech-bubble--tail-right::before,
+.speech-bubble--tail-right::after {
+  content: '';
+  position: absolute;
+  right: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+}
+.speech-bubble--tail-right::before {
+  border-width: 10px 0 10px 16px;
+  border-color: transparent transparent transparent var(--primary);
+}
+.speech-bubble--tail-right::after {
+  right: -12px;
+  border-width: 8px 0 8px 13px;
+  border-color: transparent transparent transparent #fff;
+}
+.speech-bubble--red.speech-bubble--tail-right::before {
+  border-left-color: var(--accent-red);
+}
+
+/* 尻尾: 下向き */
+.speech-bubble--tail-down::before,
+.speech-bubble--tail-down::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -16px;
+  transform: translateX(-50%);
+  border-style: solid;
+}
+.speech-bubble--tail-down::before {
+  border-width: 16px 10px 0 10px;
+  border-color: var(--primary) transparent transparent transparent;
+}
+.speech-bubble--tail-down::after {
+  bottom: -12px;
+  border-width: 13px 8px 0 8px;
+  border-color: #fff transparent transparent transparent;
+}
+.speech-bubble--red.speech-bubble--tail-down::before {
+  border-top-color: var(--accent-red);
+}
+
+/* ===== 各スロット特化の配置 ===== */
+
+/* Success band: stat-grid の左にガッツ写真を添える */
+.success-figure {
+  width: 180px;
+  flex: 0 0 auto;
+  align-self: center;
+  position: relative;
+  padding-top: 2rem; /* 吹き出しが上にハミ出る分 */
+}
+.success-figure .speech-bubble {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  z-index: 2;
+}
+.success-band .stat-grid {
+  align-items: center;
+}
+
+/* Results header: section-header の左端に浮かせる (floating CTA と被らないよう右はあけておく) */
+.section-header { position: relative; }
+.results-figure {
+  position: absolute;
+  left: 2rem;
+  bottom: 0;
+  width: 170px;
+  padding-top: 2rem;
+}
+.results-figure .speech-bubble {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(-5deg);
+  z-index: 2;
+}
+
+/* Profile: 既存の profile-image-placeholder 枠を使ってデカ写真に */
+.profile-image-placeholder.cutout-slot {
+  line-height: 0;
+  background: transparent;
+  border: none;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 4px;
+  display: block;
+}
+.profile-image-placeholder.cutout-slot .cutout {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+/* Footer: 青フッターの "まずはお気軽に!" 周辺にお願いポーズを置く */
+.footer-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: center;
+  width: 100%;
+}
+.footer-cta-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.footer-figure {
+  width: 140px;
+  position: relative;
+  flex: 0 0 auto;
+  padding-top: 2rem;
+}
+.footer-figure .speech-bubble {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  z-index: 2;
+}
+
+/* =====================================================
    Responsive Adjustments
    Breakpoints: 1100 (desktop-S) / 1024 (tablet-L) / 900 (tablet) /
                 768 (tablet portrait) / 600 (mobile) / 414 (iPhone Pro) / 375 (SE)
@@ -1287,6 +1519,28 @@ body {
   .stat-item .label { font-size: 0.72rem; }
   .result-after { font-size: 1.35rem; }
   .cta-bubble-img { width: 160px; }
+}
+
+/* Step 3: <900px では切り抜き装飾系を非表示 (情報密度優先、モバイルの
+   縦スクロール阻害を避ける)。ただし profile の大写真だけは残す (メッセージ
+   セクションは写真がないと寂しくなる) */
+@media (max-width: 900px) {
+  .success-figure,
+  .results-figure,
+  .footer-figure {
+    display: none;
+  }
+  /* Profile 画像枠は既存 width/height を塗りつぶすので上書き */
+  .profile-image-placeholder.cutout-slot {
+    width: 200px;
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+}
+@media (max-width: 600px) {
+  .profile-image-placeholder.cutout-slot {
+    width: 160px;
+  }
 }
 
 /* iPhone SE / 最小クラス */

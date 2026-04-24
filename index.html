@@ -81,10 +81,15 @@
     </section>
 
     <!-- Success Stats (Supporting Proof) -->
-    <!-- Success Stats (Supporting Proof) -->
     <div class="success-band reveal">
       <div class="container">
         <div class="stat-grid">
+          <!-- Step3: stats 左端に「ガッツ」写真 + 吹き出し。
+               data-pose はモック中の案内ラベル、差し替え時に外す。 -->
+          <figure class="cutout-slot success-figure" data-pose="ガッツ（16）">
+            <span class="speech-bubble speech-bubble--red speech-bubble--tail-down">実績で証明！</span>
+            <img src="/2026.3.24-16.jpg" alt="" class="cutout">
+          </figure>
           <div class="stat-item">
             <span class="number">20年</span>
             <span class="label">EC業界在籍歴</span>
@@ -108,6 +113,12 @@
           <span class="section-label">Performance & Results</span>
           <h2 class="section-title">実績ご紹介</h2>
           <p class="japanese">9年間で230社以上を支援。数多くの現場での実績。</p>
+          <!-- Step3: 見出し右端に「サムズUP」写真 + 吹き出し。
+               section-header が position:relative なので絶対配置で浮かせる。 -->
+          <figure class="cutout-slot results-figure" data-pose="サムズUP（134）">
+            <span class="speech-bubble speech-bubble--red speech-bubble--tail-down">見てください！</span>
+            <img src="/2026.3.24-134.jpg" alt="" class="cutout">
+          </figure>
         </div>
 
         <div class="results-grid">
@@ -234,7 +245,12 @@
     <section id="profile" class="section">
       <div class="container">
         <div class="profile-content reveal">
-          <div class="profile-image-placeholder"></div>
+          <!-- Step3: placeholder 枠に座って笑顔のデカ写真。
+               メッセージセクションは肖像がないと寂しいので、ここは装飾ではなく
+               "主役写真" として機能させる。吹き出しなし。 -->
+          <figure class="profile-image-placeholder cutout-slot" data-pose="座って笑顔（155）">
+            <img src="/2026.3.24-155.jpg" alt="山本慎二郎" class="cutout">
+          </figure>
           <div class="profile-text">
             <span class="section-label" style="text-align: left;">Message</span>
             <h3>山本 慎二郎</h3>
@@ -253,10 +269,21 @@
           <img src="/captain-logo.png" alt="キャプテン山本">
         </h2>
         <p class="footer-tagline">あなたのECに革命を起こす伴走型パートナー。</p>
-        <p class="footer-note">まずはお気軽に！</p>
-        
-        <!-- 空のドックスロット: 緑ボタンは撤去し、floating CTA がここに着地するだけ -->
-        <div class="footer-cta-wrap" aria-hidden="true"></div>
+
+        <!-- Step3: 青フッター地に「お願い」写真を白ポラロイド風で置いて
+             "まずはお気軽に！" と同じ行で CTA 着地スロット周辺を賑やかに。
+             cutout--framed で白背景のまま(濃色地だと multiply が効かないため)。 -->
+        <div class="footer-cta-row">
+          <figure class="cutout-slot footer-figure" data-pose="お願い（145）">
+            <span class="speech-bubble speech-bubble--tail-down">お願いします！</span>
+            <img src="/2026.3.24-145.jpg" alt="" class="cutout cutout--framed">
+          </figure>
+          <div class="footer-cta-inner">
+            <p class="footer-note">まずはお気軽に！</p>
+            <!-- 空のドックスロット: 緑ボタンは撤去し、floating CTA がここに着地するだけ -->
+            <div class="footer-cta-wrap" aria-hidden="true"></div>
+          </div>
+        </div>
 
         <div class="social-links">
            <a href="https://www.youtube.com/@cap-yamamoto" target="_blank" rel="noopener noreferrer" class="social-link" title="YouTube">
