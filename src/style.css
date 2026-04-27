@@ -149,13 +149,13 @@ body {
 .section-header .japanese,
 .japanese {
   display: inline-block;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--text-main);
   margin: 1.5rem auto 0;
   background: #fff;
   border: var(--border-thick);
-  padding: 0.7rem 1.5rem;
+  padding: 0.8rem 1.6rem;
   border-radius: 2px;
   text-shadow: none;
   font-family: var(--font-sans);
@@ -738,21 +738,21 @@ body {
 }
 .service-price-label {
   display: block;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-muted);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 .service-price-row {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   flex-wrap: wrap;
 }
 .service-price-before {
   font-family: var(--font-impact);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 900;
   color: var(--text-muted);
   text-decoration: line-through;
@@ -760,14 +760,14 @@ body {
   text-decoration-color: var(--accent-red);
 }
 .service-price-arrow {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 900;
   color: var(--accent-red);
   line-height: 1;
 }
 .service-price-after {
   font-family: var(--font-impact);
-  font-size: 2.4rem;
+  font-size: 2.8rem;
   font-weight: 900;
   color: var(--accent-red);
   -webkit-text-stroke: 1px var(--accent-red);
@@ -792,10 +792,10 @@ body {
 }
 .service-features li {
   position: relative;
-  padding-left: 1.5rem;
-  font-size: 0.95rem;
+  padding-left: 1.6rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--text-main);
 }
 .service-features li::before {
@@ -805,8 +805,8 @@ body {
   top: 0;
   color: var(--accent-red);
   font-weight: 900;
-  font-size: 1.05rem;
-  line-height: 1.5;
+  font-size: 1.2rem;
+  line-height: 1.6;
 }
 
 .service-cta {
@@ -817,9 +817,9 @@ body {
   text-decoration: none;
   font-family: var(--font-impact);
   font-weight: 900;
-  padding: 0.7em 1.3em;
+  padding: 0.75em 1.5em;
   border-radius: 4px;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   letter-spacing: 0.02em;
   transition: transform 0.15s ease-out, background 0.15s ease-out;
 }
@@ -874,12 +874,12 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   background: rgba(0, 0, 0, 0.55);
   color: #fff;
-  font-size: 1.4rem;
-  line-height: 64px;
+  font-size: 1.7rem;
+  line-height: 80px;
   text-align: center;
   border-radius: 50%;
   transition: background 0.18s ease-out;
@@ -891,9 +891,9 @@ body {
 .video-card-title {
   font-family: var(--font-sans);
   font-weight: 800;
-  font-size: 0.95rem;
-  line-height: 1.45;
-  padding: 0.9rem 1rem 1rem;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  padding: 1.1rem 1.25rem 1.25rem;
   /* 2行で省略 */
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1527,22 +1527,23 @@ button.youtube-nav-next:hover {
   #service { padding: 3rem 0; }
   .service-card {
     grid-template-columns: 1fr;
-    gap: 1.25rem;
-    padding: 1.5rem 1.25rem;
+    gap: 1.5rem;
+    padding: 1.75rem 1.5rem;
   }
   .service-price {
     border-right: none;
     border-bottom: 2px dashed var(--border-color);
     padding-right: 0;
-    padding-bottom: 1.25rem;
+    padding-bottom: 1.5rem;
   }
-  .service-price-after { font-size: 2.1rem; }
+  .service-price-after { font-size: 2.5rem; }
   .service-cta { align-self: center; }
 
   /* --- YouTube: 矢印隠す (スワイプで操作) --- */
   .youtube-carousel { padding: 0 1rem; }
   button.youtube-nav-prev, button.youtube-nav-next { display: none; }
-  .video-card-title { font-size: 0.9rem; padding: 0.8rem 0.9rem 1rem; }
+  .video-card-title { font-size: 1.05rem; padding: 0.95rem 1.05rem 1.1rem; }
+  .video-play { width: 70px; height: 70px; line-height: 70px; font-size: 1.5rem; }
 
   /* --- Profile: 縦積み (画像→テキスト) --- */
   .profile-content {
@@ -1635,18 +1636,18 @@ button.youtube-nav-next:hover {
   .support-answer-text h4 { font-size: 1rem; }
   .support-answer-text p { font-size: 0.95rem; }
 
-  /* YouTube card title: 行詰め */
-  .video-card-title { font-size: 0.85rem; padding: 0.7rem 0.8rem 0.9rem; }
-  .video-play { width: 52px; height: 52px; line-height: 52px; font-size: 1.2rem; }
+  /* YouTube card title: 読める下限 1rem を死守 */
+  .video-card-title { font-size: 1rem; padding: 0.8rem 0.9rem 1rem; }
+  .video-play { width: 60px; height: 60px; line-height: 60px; font-size: 1.35rem; }
 
-  /* Service モバイル詰め */
+  /* Service モバイル詰め (フォントは読める下限を維持) */
   #service { padding: 2.5rem 0; }
-  .service-card { padding: 1.25rem 1rem; }
-  .service-price-label { font-size: 0.8rem; }
-  .service-price-before { font-size: 1.05rem; }
-  .service-price-after { font-size: 1.85rem; }
-  .service-features li { font-size: 0.9rem; }
-  .service-cta { font-size: 0.9rem; padding: 0.7em 1.1em; }
+  .service-card { padding: 1.4rem 1.1rem; }
+  .service-price-label { font-size: 0.95rem; }
+  .service-price-before { font-size: 1.25rem; }
+  .service-price-after { font-size: 2.1rem; }
+  .service-features li { font-size: 1rem; }
+  .service-cta { font-size: 1rem; padding: 0.7em 1.2em; }
 
   /* Profile */
   .profile-content { padding: 1.5rem 1rem; }

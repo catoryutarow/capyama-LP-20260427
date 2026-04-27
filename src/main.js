@@ -52,12 +52,12 @@ function renderYouTubeCarousel() {
 
     new Swiper('.youtube-swiper', {
         modules: [Navigation, Pagination],
-        slidesPerView: 1.15,
-        spaceBetween: 20,
-        // おじちゃん・おばちゃん向けに数本見えるブレイクポイントに
+        slidesPerView: 1.25,
+        spaceBetween: 22,
+        // PC は 2 列で どーん と見せる (旧 3 列は窮屈)
         breakpoints: {
-            640: { slidesPerView: 2.1, spaceBetween: 20 },
-            1024: { slidesPerView: 3, spaceBetween: 24 },
+            640: { slidesPerView: 2.15, spaceBetween: 22 },
+            1024: { slidesPerView: 2, spaceBetween: 28 },
         },
         navigation: {
             nextEl: '.youtube-nav-next',
