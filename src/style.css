@@ -803,11 +803,24 @@ body {
   transform: scale(1.08);
   background: #C91A1A;
 }
+/* Swiper 既定の chevron アイコンフォントを潰し、CSS ボーダーでシンプルな三角に */
 .youtube-nav-prev::after,
 .youtube-nav-next::after {
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: #fff;
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  font-size: 0; /* Swiper のフォントアイコンを念のため非表示 */
+}
+.youtube-nav-prev::after {
+  border-width: 8px 12px 8px 0;
+  border-color: transparent #fff transparent transparent;
+  margin-left: -2px; /* 視覚中央寄せ (左向き三角は重心が右に寄る) */
+}
+.youtube-nav-next::after {
+  border-width: 8px 0 8px 12px;
+  border-color: transparent transparent transparent #fff;
+  margin-right: -2px;
 }
 
 /* ページネーションのドット色をブランド赤に */
@@ -1289,34 +1302,6 @@ body {
   object-position: center 20%;
 }
 
-/* Footer: 青フッターの "まずはお気軽に!" 周辺にお願いポーズを置く */
-.footer-cta-row {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  justify-content: center;
-  width: 100%;
-}
-.footer-cta-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-.footer-figure {
-  width: 140px;
-  position: relative;
-  flex: 0 0 auto;
-  padding-top: 2rem;
-}
-.footer-figure .speech-bubble {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) rotate(-4deg);
-  z-index: 2;
-}
-
 /* =====================================================
    Responsive Adjustments
    Breakpoints: 1100 (desktop-S) / 1024 (tablet-L) / 900 (tablet) /
@@ -1549,8 +1534,7 @@ body {
    セクションは写真がないと寂しくなる) */
 @media (max-width: 900px) {
   .success-figure,
-  .results-figure,
-  .footer-figure {
+  .results-figure {
     display: none;
   }
   /* Profile 画像枠は既存 width/height を塗りつぶすので上書き */
