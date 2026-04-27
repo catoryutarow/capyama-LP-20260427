@@ -714,28 +714,10 @@ body {
 /* ======================================================================
    Own Service: かいものパレット
    緑背景の上にコンパクトな白カード 1 枚。
-   ロゴ = section-title 役。バナー = カード上部のストリップ役。
+   バナー = カード上部のストリップ役。
    ====================================================================== */
 #service { padding: 4rem 0; }                /* .section の 6rem を圧縮 */
 #service .section-header { margin-bottom: 1.8rem; }
-
-/* ロゴ: 既存 .section-title (skewX 帯) を置き換え、ブランド identity を直接表示 */
-.service-title-logo {
-  display: block;
-  width: 110px;
-  height: 110px;
-  object-fit: contain;
-  margin: 0 auto 1.25rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-}
-/* ロゴ画像を使うので h2 はスクリーンリーダー用に視覚的非表示 (構造的見出しは保持) */
-.section-title-sr {
-  position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px; overflow: hidden;
-  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-}
 
 .service-card {
   background: #fff;
@@ -1579,8 +1561,6 @@ button.youtube-nav-next:hover {
   }
   .service-price-after { font-size: 2.5rem; }
   .service-cta { align-self: center; }
-  /* ロゴ・バナーも一回り縮小 */
-  .service-title-logo { width: 96px; height: 96px; }
   .service-banner { height: 110px; }
 
   /* --- YouTube: 矢印隠す (スワイプで操作) --- */
@@ -1692,7 +1672,6 @@ button.youtube-nav-next:hover {
   .service-price-after { font-size: 2.1rem; }
   .service-features li { font-size: 1rem; }
   .service-cta { font-size: 1rem; padding: 0.7em 1.2em; }
-  .service-title-logo { width: 84px; height: 84px; }
   .service-banner { height: 90px; }
 
   /* Profile */
