@@ -1243,21 +1243,28 @@ body {
   mix-blend-mode: normal;
 }
 
-/* Results header: section-header の左端に浮かせる (floating CTA と被らないよう右はあけておく) */
+/* Results: section 右上に「左指差し」切り抜きを配置。
+   success-figure(左)と左右対称になるよう、section 上端を突き抜けて
+   上半身が success-band 側へ覗く構図。指差しの先 (左) が「実績ご紹介」見出しを指す。 */
 .section-header { position: relative; }
+#results { position: relative; overflow: visible; }
 .results-figure {
   position: absolute;
-  left: 2rem;
-  bottom: 0;
-  width: 170px;
-  padding-top: 2rem;
+  top: -160px;             /* section 上端から 160px 上に飛び出す → success-band 右側へ覗く */
+  right: max(1rem, 3vw);
+  width: 220px;
+  z-index: 4;
+  pointer-events: none;
+  line-height: 0;
 }
-.results-figure .speech-bubble {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) rotate(-5deg);
-  z-index: 2;
+.results-figure .cutout {
+  mix-blend-mode: normal;
+  width: 100%;
+  height: auto;
+  display: block;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 78%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 78%);
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.18));
 }
 
 /* Profile: 既存の profile-image-placeholder 枠を使ってデカ写真に */
