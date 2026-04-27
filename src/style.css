@@ -784,19 +784,28 @@ body {
   overflow: hidden;
 }
 
-/* Swiper 既定の青丸/chevron を全撤去し、赤三角「だけ」を表示。
-   セレクタは button.* で specificity を上げ、Swiper 既定の
-   .swiper-button-prev (var(--swiper-navigation-size)=44px) を確実に上書き */
+/* Swiper 既定の青丸 + chevron SVG + ブラウザ既定 button 枠線を全撤去し、
+   赤三角「だけ」を表示。
+   - appearance: none → ブラウザの button デフォルト UA スタイル (枠線/背景) を消す
+   - svg child を display:none → Swiper が DOM に挿入する青 chevron SVG を消す */
 button.youtube-nav-prev,
 button.youtube-nav-next {
   width: 28px;
   height: 28px;
   background: none;
+  border: none;
   border-radius: 0;
+  padding: 0;
   box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
   top: calc(50% - 14px - 2rem); /* ページネーションぶん少し上げる */
   margin-top: 0;
   transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+button.youtube-nav-prev > svg,
+button.youtube-nav-next > svg {
+  display: none;
 }
 button.youtube-nav-prev { left: 0; }
 button.youtube-nav-next { right: 0; }
