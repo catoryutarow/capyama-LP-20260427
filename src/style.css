@@ -1241,9 +1241,10 @@ body {
   /* drop-shadow は mask 形状にも追従する */
   filter: drop-shadow(0 8px 14px rgba(0,0,0,0.18));
 }
-/* 共通の透過 PNG ヘルパー（今後の差し替え用） */
+/* 共通の透過 PNG ヘルパー: 白背景JPG用のトリック (multiply / コントラスト補正) を解除 */
 .cutout--png {
   mix-blend-mode: normal;
+  filter: none;
 }
 
 /* Results: section 右下に「左指差し」切り抜きを配置。
