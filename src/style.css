@@ -784,26 +784,28 @@ body {
   overflow: hidden;
 }
 
-/* Swiper 既定の青矢印 → ブランド赤の丸ボタンに */
-.youtube-nav-prev,
-.youtube-nav-next {
-  width: 44px;
-  height: 44px;
-  background: var(--accent-red);
-  border-radius: 50%;
-  top: calc(50% - 22px - 2rem); /* ページネーションぶん少し上げる */
+/* Swiper 既定の青丸/chevron を全撤去し、赤三角「だけ」を表示。
+   セレクタは button.* で specificity を上げ、Swiper 既定の
+   .swiper-button-prev (var(--swiper-navigation-size)=44px) を確実に上書き */
+button.youtube-nav-prev,
+button.youtube-nav-next {
+  width: 28px;
+  height: 28px;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  top: calc(50% - 14px - 2rem); /* ページネーションぶん少し上げる */
   margin-top: 0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.15s ease-out, background 0.15s ease-out;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
 }
-.youtube-nav-prev { left: 0; }
-.youtube-nav-next { right: 0; }
-.youtube-nav-prev:hover,
-.youtube-nav-next:hover {
-  transform: scale(1.08);
-  background: #C91A1A;
+button.youtube-nav-prev { left: 0; }
+button.youtube-nav-next { right: 0; }
+button.youtube-nav-prev:hover,
+button.youtube-nav-next:hover {
+  transform: scale(1.15);
+  opacity: 0.8;
 }
-/* Swiper 既定の chevron アイコンフォントを潰し、CSS ボーダーでシンプルな三角に */
+/* Swiper 既定の chevron アイコンフォントを潰し、CSS ボーダーで赤三角に */
 .youtube-nav-prev::after,
 .youtube-nav-next::after {
   content: '';
@@ -813,14 +815,12 @@ body {
   font-size: 0; /* Swiper のフォントアイコンを念のため非表示 */
 }
 .youtube-nav-prev::after {
-  border-width: 8px 12px 8px 0;
-  border-color: transparent #fff transparent transparent;
-  margin-left: -2px; /* 視覚中央寄せ (左向き三角は重心が右に寄る) */
+  border-width: 14px 20px 14px 0;
+  border-color: transparent var(--accent-red) transparent transparent;
 }
 .youtube-nav-next::after {
-  border-width: 8px 0 8px 12px;
-  border-color: transparent transparent transparent #fff;
-  margin-right: -2px;
+  border-width: 14px 0 14px 20px;
+  border-color: transparent transparent transparent var(--accent-red);
 }
 
 /* ページネーションのドット色をブランド赤に */
@@ -1319,7 +1319,9 @@ body {
 @media (max-width: 1024px) {
   /* YouTube 矢印を控えめに */
   .youtube-carousel { padding: 0 3rem; }
-  .youtube-nav-prev, .youtube-nav-next { width: 40px; height: 40px; }
+  button.youtube-nav-prev, button.youtube-nav-next { width: 24px; height: 24px; }
+  button.youtube-nav-prev::after { border-width: 12px 17px 12px 0; }
+  button.youtube-nav-next::after { border-width: 12px 0 12px 17px; }
   /* Stats の間隔を詰めて横並び維持 */
   .stat-grid { gap: 2.5rem; }
   .stat-item .number { font-size: 3.2rem; }
@@ -1397,7 +1399,7 @@ body {
 
   /* --- YouTube: 矢印隠す (スワイプで操作) --- */
   .youtube-carousel { padding: 0 1rem; }
-  .youtube-nav-prev, .youtube-nav-next { display: none; }
+  button.youtube-nav-prev, button.youtube-nav-next { display: none; }
   .video-card-title { font-size: 0.9rem; padding: 0.8rem 0.9rem 1rem; }
 
   /* --- Profile: 縦積み (画像→テキスト) --- */
