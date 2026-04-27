@@ -1213,23 +1213,34 @@ body {
 
 /* ===== 各スロット特化の配置 ===== */
 
-/* Success band: stat-grid の左にガッツ写真を添える */
+/* Success band: 切り抜き済み PNG を band の左に配置。
+   band の上端を突き抜けて上半身を company セクションへ「ヒョコッと出す」演出。
+   下半身（脚〜靴）は mask-image でフェードアウトさせ、フルボディを見せない。 */
+.success-band { position: relative; overflow: visible; }
 .success-figure {
-  width: 180px;
-  flex: 0 0 auto;
-  align-self: center;
-  position: relative;
-  padding-top: 2rem; /* 吹き出しが上にハミ出る分 */
-}
-.success-figure .speech-bubble {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) rotate(-5deg);
-  z-index: 2;
+  left: max(1rem, 3vw);
+  bottom: 0;
+  width: 220px;
+  z-index: 4;
+  pointer-events: none;
+  line-height: 0;
 }
-.success-band .stat-grid {
-  align-items: center;
+.success-figure .cutout {
+  /* 透過 PNG なので blend を解除 */
+  mix-blend-mode: normal;
+  width: 100%;
+  height: auto;
+  display: block;
+  /* 下半身を下方向にフェードアウト → 「上半身だけ band 上端から出てくる」演出 */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 78%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 78%);
+  /* drop-shadow は mask 形状にも追従する */
+  filter: drop-shadow(0 8px 14px rgba(0,0,0,0.18));
+}
+/* 共通の透過 PNG ヘルパー（今後の差し替え用） */
+.cutout--png {
+  mix-blend-mode: normal;
 }
 
 /* Results header: section-header の左端に浮かせる (floating CTA と被らないよう右はあけておく) */
