@@ -1243,14 +1243,15 @@ body {
   mix-blend-mode: normal;
 }
 
-/* Results: section 右上に「左指差し」切り抜きを配置。
-   success-figure(左)と左右対称になるよう、section 上端を突き抜けて
-   上半身が success-band 側へ覗く構図。指差しの先 (左) が「実績ご紹介」見出しを指す。 */
+/* Results: section 右下に「左指差し」切り抜きを配置。
+   #results(緑) と #support(白) の色境界をまたぎ、上半身は緑側、
+   下半身フェードは境界線を越えて白側へ消える演出。
+   指差しの左方向はちょうど「よくある質問」見出し方向を指す。 */
 .section-header { position: relative; }
 #results { position: relative; overflow: visible; }
 .results-figure {
   position: absolute;
-  top: -160px;             /* section 上端から 160px 上に飛び出す → success-band 右側へ覗く */
+  bottom: -100px;          /* 図像の足元を境界より 100px 下 (白側) に出す */
   right: max(1rem, 3vw);
   width: 220px;
   z-index: 4;
