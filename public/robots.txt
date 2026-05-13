@@ -1,3 +1,2 @@
-# 公開準備中。本公開時にこのファイルを差し替える (Disallow を外す or 削除)
 User-agent: *
-Disallow: /
+Allow: /
