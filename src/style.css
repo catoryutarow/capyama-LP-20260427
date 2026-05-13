@@ -317,12 +317,11 @@ body {
 }
 
 /* Hero: 全画面写真を無加工で見せ、テキスト側をカード化して可読性を確保 */
+/* fixed ヘッダーが写真の頭にかぶらないよう、bg はヘッダー下から開始 */
 .hero-bg {
   position: absolute;
-  inset: 0;
+  inset: var(--header-height) 0 0 0;
   z-index: -1;
-  width: 100%;
-  height: 100%;
   overflow: hidden;
 }
 
@@ -1565,8 +1564,7 @@ button.youtube-nav-next:hover {
 
   /* --- Hero: 写真は顔を外さない位置、2つの帯をコンパクトに --- */
   .hero { min-height: 82vh; }
-  /* モバイルはfixedヘッダーが写真の頭にかぶるので、bg領域をヘッダー下から開始 */
-  .hero-bg { top: var(--header-height); }
+  /* .hero-bg の header オフセットは default ルールに昇格済み。ここでは object-position だけ調整 */
   .hero-bg img { object-position: 65% top; }
   .hero-line {
     font-size: 1.35rem;
