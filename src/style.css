@@ -1618,6 +1618,12 @@ button.youtube-nav-next:hover {
   .hero-number { font-size: 2.6rem; }
   .stat-grid { gap: 3rem; }
   .profile-content { gap: 2rem; padding: 2.5rem; }
+
+  /* ナビ折返し回避: 文字とgapを縮め、ロゴも一段小さく (sugawarakun.com 戦略) */
+  .nav-list { gap: 1.5rem; }
+  .nav-list a { font-size: 0.88rem; }
+  .nav-list .nav-spollup-logo { margin-left: 0.25rem; padding-left: 1rem; }
+  .nav-list .nav-spollup-logo img { height: 24px; }
 }
 
 @media (max-width: 1024px) {
@@ -1629,13 +1635,8 @@ button.youtube-nav-next:hover {
   /* Stats の間隔を詰めて横並び維持 */
   .stat-grid { gap: 2.5rem; }
   .stat-item .number { font-size: 3.2rem; }
-}
 
-/* タブレット (iPad portrait, 大きめスマホ) */
-@media (max-width: 900px) {
-  body { font-size: 16px; }
-
-  /* --- Header: モバイルはハンバーガー → スライドダウン式メニュー --- */
+  /* --- Header: 1024px 以下でハンバーガー → スライドダウン式メニュー --- */
   .header-inner { padding: 0 4%; }
   .logo a img { height: 32px; }
   .nav-toggle { display: block; }
@@ -1690,7 +1691,8 @@ button.youtube-nav-next:hover {
     color: var(--primary);
   }
 
-  /* spollup ロゴ: モバイルでは縦並びの最後の独立エリアとして表示 */
+  /* spollup ロゴ: パネル内では縦並びの最後の独立エリアとして表示。
+     1100px 帯で縮めた height: 24px を元に戻し、border-left も解除 */
   .nav-list .nav-spollup-logo {
     justify-content: center;
     margin: 0.5rem 0 0;
@@ -1698,6 +1700,7 @@ button.youtube-nav-next:hover {
     border-left: none;
     border-top: 2px dashed rgba(0, 0, 0, 0.15);
   }
+  .nav-list .nav-spollup-logo img { height: 28px; }
   .nav-list .nav-spollup-logo a {
     padding: 0;
   }
@@ -1713,6 +1716,11 @@ button.youtube-nav-next:hover {
     background: rgba(0, 0, 0, 0.4);
     z-index: 998;
   }
+}
+
+/* タブレット (iPad portrait, 大きめスマホ) */
+@media (max-width: 900px) {
+  body { font-size: 16px; }
 
   /* --- Hero: 写真は顔を外さない位置、2つの帯をコンパクトに --- */
   .hero { min-height: 82vh; }

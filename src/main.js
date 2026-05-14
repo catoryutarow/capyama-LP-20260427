@@ -99,9 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (nav.contains(e.target) || navToggle.contains(e.target)) return;
             setMenuOpen(false);
         });
-        // デスクトップ幅に戻ったら強制クローズ (body の overflow:hidden が残る事故防止)
+        // デスクトップ幅 (>1024px) に戻ったら強制クローズ (body の overflow:hidden が残る事故防止)
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 900 && navToggle.getAttribute('aria-expanded') === 'true') {
+            if (window.innerWidth > 1024 && navToggle.getAttribute('aria-expanded') === 'true') {
                 setMenuOpen(false);
             }
         });
