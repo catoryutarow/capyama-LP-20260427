@@ -305,20 +305,30 @@ body {
   border-bottom: 3px solid var(--text-main);
 }
 
-/* 運営元 (spollup.jp) への外部リンク — メインナビより主張を弱める */
-.nav-list .nav-spollup a {
-  font-size: 0.82rem;
-  font-weight: 700;
-  opacity: 0.7;
+/* 運営元 (spollup.jp) ロゴ — ナビ右端、お問い合わせの右に独立した帰属表示として配置 */
+.nav-list .nav-spollup-logo {
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
 }
-.nav-list .nav-spollup a:hover {
+.nav-list .nav-spollup-logo a {
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.75;
+  border-bottom: none;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+.nav-list .nav-spollup-logo a:hover {
   opacity: 1;
-  border-bottom-color: transparent;
+  border-bottom: none;
+  transform: translateY(-1px);
 }
-.nav-list .nav-ext {
-  display: inline-block;
-  margin-left: 0.25em;
-  font-size: 0.9em;
+.nav-list .nav-spollup-logo img {
+  display: block;
+  height: 28px;
+  width: auto;
 }
 
 /* Hero Section */
