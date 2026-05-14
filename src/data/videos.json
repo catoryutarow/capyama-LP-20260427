@@ -1,7 +1,14 @@
 {
-  "fetchedAt": "2026-05-13T11:03:35.154Z",
+  "fetchedAt": "2026-05-13T11:27:44.660Z",
   "channelId": "UCVQXiH_rvB4WeAhJgE3CbuQ",
   "videos": [
+    {
+      "id": "8ghCwewLPf0",
+      "title": "レビューを重要視する人はなんと〇〇%…ECに関する有料級レポート！",
+      "published": "2026-05-13T11:00:10+00:00",
+      "thumbnail": "https://i.ytimg.com/vi/8ghCwewLPf0/hqdefault.jpg",
+      "url": "https://www.youtube.com/watch?v=8ghCwewLPf0"
+    },
     {
       "id": "5qaAEJHUqTA",
       "title": "楽天で見つけたヤバいキャンドル!?商品紹介ページを分析。",
@@ -43,13 +50,6 @@
       "published": "2026-04-25T00:50:13+00:00",
       "thumbnail": "https://i.ytimg.com/vi/72ooDsXGSRs/hqdefault.jpg",
       "url": "https://www.youtube.com/watch?v=72ooDsXGSRs"
-    },
-    {
-      "id": "lVFcGzJ4Ers",
-      "title": "配信たった1回でコスメが爆売れした話",
-      "published": "2026-04-22T11:01:22+00:00",
-      "thumbnail": "https://i.ytimg.com/vi/lVFcGzJ4Ers/hqdefault.jpg",
-      "url": "https://www.youtube.com/watch?v=lVFcGzJ4Ers"
     }
   ]
 }
