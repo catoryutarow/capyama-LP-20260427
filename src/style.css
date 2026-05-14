@@ -331,6 +331,36 @@ body {
   width: auto;
 }
 
+/* ハンバーガートグルボタン (デスクトップでは非表示、モバイル breakpoint で display:block) */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  position: relative;
+}
+.nav-toggle-bar {
+  display: block;
+  width: 28px;
+  height: 3px;
+  margin: 5px auto;
+  background: var(--text-main);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
 /* Hero Section */
 .hero {
   position: relative;
@@ -1585,10 +1615,76 @@ button.youtube-nav-next:hover {
 @media (max-width: 900px) {
   body { font-size: 16px; }
 
-  /* --- Header: モバイルはロゴのみ (ナビ全撤去) で写真との視覚干渉を最小化 --- */
+  /* --- Header: モバイルはハンバーガー → スライドダウン式メニュー --- */
   .header-inner { padding: 0 4%; }
   .logo a img { height: 32px; }
-  .nav-list { display: none; }
+  .nav-toggle { display: block; }
+
+  /* ナビ全体をヘッダー下にスライドダウンするパネル化 */
+  .nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-bottom: var(--border-thick);
+    box-shadow: var(--shadow-solid-md);
+    transform: translateY(-110%);
+    transition: transform 0.3s ease;
+    z-index: 999;
+    max-height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+  }
+  body.menu-open .nav {
+    transform: translateY(0);
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+    padding: 0.5rem 5% 1rem;
+  }
+  .nav-list li {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .nav-list li:last-child {
+    border-bottom: none;
+  }
+  .nav-list a {
+    display: block;
+    padding: 1.1rem 0.25rem;
+    font-size: 1.15rem;
+    border-bottom: none;
+  }
+  .nav-list a:hover {
+    border-bottom: none;
+    color: var(--primary);
+  }
+
+  /* spollup ロゴ: モバイルでは縦並びの最後の独立エリアとして表示 */
+  .nav-list .nav-spollup-logo {
+    justify-content: center;
+    margin: 0.5rem 0 0;
+    padding: 1.25rem 0 0.5rem;
+    border-left: none;
+    border-top: 2px dashed rgba(0, 0, 0, 0.15);
+  }
+  .nav-list .nav-spollup-logo a {
+    padding: 0;
+  }
+
+  /* メニュー開時: 背景スクロール固定 + ヘッダー下にオーバーレイ */
+  body.menu-open {
+    overflow: hidden;
+  }
+  body.menu-open::before {
+    content: '';
+    position: fixed;
+    inset: var(--header-height) 0 0 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 998;
+  }
 
   /* --- Hero: 写真は顔を外さない位置、2つの帯をコンパクトに --- */
   .hero { min-height: 82vh; }

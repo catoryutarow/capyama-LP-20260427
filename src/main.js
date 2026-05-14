@@ -71,6 +71,42 @@ function renderYouTubeCarousel() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Mobile hamburger menu (max-width: 900px)
+    // aria-expanded を真実の状態源として使う。CSS は body.menu-open でパネル位置 + 背景固定を制御。
+    const navToggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('nav');
+    if (navToggle && nav) {
+        const setMenuOpen = (open) => {
+            navToggle.setAttribute('aria-expanded', String(open));
+            navToggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+            document.body.classList.toggle('menu-open', open);
+        };
+        navToggle.addEventListener('click', () => {
+            setMenuOpen(navToggle.getAttribute('aria-expanded') !== 'true');
+        });
+        // リンクタップで自動クローズ (アンカーへスムーススクロール中に背景固定が残らないよう)
+        nav.querySelectorAll('a').forEach((a) => {
+            a.addEventListener('click', () => setMenuOpen(false));
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+                setMenuOpen(false);
+            }
+        });
+        // パネル外タップ (オーバーレイ部分) で閉じる
+        document.addEventListener('click', (e) => {
+            if (navToggle.getAttribute('aria-expanded') !== 'true') return;
+            if (nav.contains(e.target) || navToggle.contains(e.target)) return;
+            setMenuOpen(false);
+        });
+        // デスクトップ幅に戻ったら強制クローズ (body の overflow:hidden が残る事故防止)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900 && navToggle.getAttribute('aria-expanded') === 'true') {
+                setMenuOpen(false);
+            }
+        });
+    }
+
     // Reveal Animations using Intersection Observer
     const revealElements = document.querySelectorAll('.reveal');
     const revealOptions = {
