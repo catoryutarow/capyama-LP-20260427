@@ -1627,6 +1627,41 @@ button.youtube-nav-next:hover {
 }
 
 @media (max-width: 1024px) {
+  /* === Phone-sim mode: body を 500px 固定・両脇白埋め・薄シャドウで「スマホ枠」表現 ===
+     viewport 幅に関係なくスマホレイアウト一本に統一することで、
+     901-1024px の中途半端なデスクトップ崩れを根絶する */
+  html { background: #fff; }
+  body {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+  }
+  /* fixed 要素は viewport 基準で配置されるため、body の max-width に従わない。
+     left:50% + transform:translateX(-50%) + max-width:500px で手動センタリング */
+  .header {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 500px;
+  }
+  body.menu-open::before {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 500px;
+  }
+  /* Floating CTA: viewport 右端ではなく body 右端基準で 2rem 内側に */
+  .floating-cta {
+    right: max(2rem, calc((100vw - 500px) / 2 + 2rem));
+  }
+
+  /* phone-sim では hero の CTA バブル (お問い合わせ) を撤去。
+     500px 幅では山本さんの顔/胸元にバブルが被る + floating CTA とで重複する */
+  .hero-btns { display: none; }
+
   /* YouTube 矢印を控えめに */
   .youtube-carousel { padding: 0 3rem; }
   button.youtube-nav-prev, button.youtube-nav-next { width: 24px; height: 24px; }
@@ -1643,21 +1678,22 @@ button.youtube-nav-next:hover {
 
   /* ナビ全体をヘッダー下にスライドダウンするパネル化。
      ヘッダーのスタッキングコンテキスト外 (body直下) に配置済みなので
-     z-index 999 < ヘッダー 1000 が正しく機能し、閉時はヘッダー裏に完全に隠れる。 */
+     z-index 999 < ヘッダー 1000 が正しく機能し、閉時はヘッダー裏に完全に隠れる。
+     phone-sim モードに合わせ left:50% + translateX(-50%) で body 中央に揃える */
   .nav {
     position: fixed;
     top: var(--header-height);
-    left: 0;
+    left: 50%;
     right: auto;
     width: 100%;
-    max-width: none;
+    max-width: 500px;
     height: auto;
     padding: 0;
     display: block;
     background: #fff;
     border-bottom: var(--border-thick);
     box-shadow: var(--shadow-solid-md);
-    transform: translateY(-110%);
+    transform: translateX(-50%) translateY(-110%);
     transition: transform 0.3s ease;
     z-index: 999;
     max-height: calc(100vh - var(--header-height));
@@ -1665,7 +1701,7 @@ button.youtube-nav-next:hover {
     pointer-events: auto;
   }
   body.menu-open .nav {
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
 
   .nav-list {
@@ -1719,7 +1755,7 @@ button.youtube-nav-next:hover {
 }
 
 /* タブレット (iPad portrait, 大きめスマホ) */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   body { font-size: 16px; }
 
   /* --- Hero: 写真は顔を外さない位置、2つの帯をコンパクトに --- */
@@ -1751,8 +1787,8 @@ button.youtube-nav-next:hover {
   .btn-hero-cta-img { width: 340px; }
   .hero-subtitle { font-size: 1rem; }
 
-  /* --- Company: 2-col (タブレット縦) --- */
-  .company-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  /* --- Company: 1-col (phone-sim 幅で「01,02横並び→03だけ折り返し」を回避) --- */
+  .company-grid { grid-template-columns: 1fr; gap: 1.5rem; }
   .company-card {
     transform: none !important;
     padding: 2.5rem 1.5rem 2rem;
@@ -1760,16 +1796,19 @@ button.youtube-nav-next:hover {
   .company-card h3 { font-size: 1.2rem; }
   .company-card p { font-size: 1rem; }
 
-  /* --- Stats: 横並び維持で縮小 (縦列だと "スペック感" が出ない) --- */
-  .stat-grid { gap: 1.5rem; flex-direction: row; }
+  /* --- Stats: 横並び維持で縮小 (縦列だと "スペック感" が出ない)。
+       phone-sim (body 500px) の狭いセル幅で「230 / 社」「10億 / 超」と改行されるのを
+       防ぐため nowrap + font 抑制 --- */
+  .stat-grid { gap: 0.8rem; flex-direction: row; }
   .stat-item {
     transform: none !important;
-    padding: 1.3rem 0.8rem;
+    padding: 1.3rem 0.5rem;
     flex: 1;
     text-align: center;
+    min-width: 0; /* flex item の min-width:auto を抑える (overflow 防止) */
   }
-  .stat-item .number { font-size: 2.6rem; }
-  .stat-item .label { font-size: 1rem; }
+  .stat-item .number { font-size: 2.2rem; white-space: nowrap; }
+  .stat-item .label { font-size: 0.9rem; white-space: nowrap; }
 
   /* --- Results: 1-col --- */
   .results-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -1958,7 +1997,7 @@ button.youtube-nav-next:hover {
 /* Step 3: <900px では切り抜き装飾系を非表示 (情報密度優先、モバイルの
    縦スクロール阻害を避ける)。ただし profile の大写真だけは残す (メッセージ
    セクションは写真がないと寂しくなる) */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .success-figure,
   .results-figure {
     display: none;
