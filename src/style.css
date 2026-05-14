@@ -305,6 +305,22 @@ body {
   border-bottom: 3px solid var(--text-main);
 }
 
+/* 運営元 (spollup.jp) への外部リンク — メインナビより主張を弱める */
+.nav-list .nav-spollup a {
+  font-size: 0.82rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+.nav-list .nav-spollup a:hover {
+  opacity: 1;
+  border-bottom-color: transparent;
+}
+.nav-list .nav-ext {
+  display: inline-block;
+  margin-left: 0.25em;
+  font-size: 0.9em;
+}
+
 /* Hero Section */
 .hero {
   position: relative;
@@ -1175,6 +1191,8 @@ button.youtube-nav-next:hover {
 .social-link svg { width: 24px; height: 24px; }
 
 .footer-bottom { margin-top: 4rem; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.1em; }
+.footer-bottom a { color: inherit; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.4); text-underline-offset: 3px; transition: var(--transition-fast); }
+.footer-bottom a:hover { text-decoration-color: currentColor; }
 
 /* Floating CTA */
 .floating-cta {
