@@ -284,11 +284,31 @@ body {
   display: block;
 }
 
+/* nav は header の外 (body直下) に置きつつ、デスクトップでは
+   position: fixed でヘッダー右側に重ねて「ヘッダー内右側」のように見せる。
+   pointer-events: none でロゴ等ヘッダー要素のクリックを通し、子の .nav-list だけ受ける。 */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--content-width);
+  height: var(--header-height);
+  padding: 0 5%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 1001;
+  pointer-events: none;
+}
+
 .nav-list {
   display: flex;
   align-items: center;
   gap: 2.5rem;
   list-style: none;
+  pointer-events: auto;
 }
 
 .nav-list a {
@@ -1620,12 +1640,19 @@ button.youtube-nav-next:hover {
   .logo a img { height: 32px; }
   .nav-toggle { display: block; }
 
-  /* ナビ全体をヘッダー下にスライドダウンするパネル化 */
+  /* ナビ全体をヘッダー下にスライドダウンするパネル化。
+     ヘッダーのスタッキングコンテキスト外 (body直下) に配置済みなので
+     z-index 999 < ヘッダー 1000 が正しく機能し、閉時はヘッダー裏に完全に隠れる。 */
   .nav {
     position: fixed;
     top: var(--header-height);
     left: 0;
+    right: auto;
     width: 100%;
+    max-width: none;
+    height: auto;
+    padding: 0;
+    display: block;
     background: #fff;
     border-bottom: var(--border-thick);
     box-shadow: var(--shadow-solid-md);
@@ -1634,6 +1661,7 @@ button.youtube-nav-next:hover {
     z-index: 999;
     max-height: calc(100vh - var(--header-height));
     overflow-y: auto;
+    pointer-events: auto;
   }
   body.menu-open .nav {
     transform: translateY(0);
