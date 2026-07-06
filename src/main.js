@@ -70,6 +70,149 @@ function renderYouTubeCarousel() {
     });
 }
 
+function initCapYamamotoTracking() {
+    if (window.__capYamamotoTrackingInstalled) return;
+    window.__capYamamotoTrackingInstalled = true;
+
+    const cleanText = (value) => String(value || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+
+    const closestAction = (target) => {
+        if (!target || !target.closest) return null;
+        return target.closest('a, button, [role="button"]');
+    };
+
+    const toUrl = (href) => {
+        if (!href) return '';
+        try {
+            return new URL(href, window.location.href).href;
+        } catch {
+            return href;
+        }
+    };
+
+    const getClickText = (el) => {
+        const img = el.querySelector?.('img[alt]');
+        return cleanText(
+            el.innerText ||
+            el.textContent ||
+            img?.getAttribute('alt') ||
+            el.getAttribute('aria-label') ||
+            el.getAttribute('title') ||
+            ''
+        );
+    };
+
+    const getClickArea = (el, href, url) => {
+        const target = href || url || '';
+        if (!el) return 'other_link';
+        if (el.closest('.btn-hero-cta')) return 'hero_cta';
+        if (el.closest('.footer-cta-wrap')) return 'footer_cta';
+        if (el.closest('.cta-bubble')) return 'floating_cta';
+        if (el.closest('.logo')) return 'header_logo';
+        if (el.closest('.nav')) {
+            if (target === '#company') return 'nav_company';
+            if (target === '#results') return 'nav_results';
+            if (target === '#service') return 'nav_service';
+            if (target === '#youtube') return 'nav_youtube';
+            if (/\/contact\/?$/.test(target)) return 'nav_contact';
+            if (/spollup\.jp\/?$/.test(target)) return 'nav_spollup';
+            return 'nav_other';
+        }
+        if (/rakuten\.co\.jp\/earlygetter/.test(target)) return 'rakuten_banner';
+        if (/youtube\.com\/watch/.test(target)) return 'youtube_video';
+        if (/youtube\.com\/@cap-yamamoto/.test(target)) return 'social_youtube';
+        if (/facebook\.com\/shinjiro\.yamamoto/.test(target)) return 'social_facebook';
+        if (/instagram\.com\/spollup_yamamoto/.test(target)) return 'social_instagram';
+        if (/spollup\.jp\/?$/.test(target)) return 'footer_spollup';
+        return 'other_link';
+    };
+
+    const getClickType = (url, area) => {
+        if (area.includes('cta') || area === 'nav_contact') return 'cta';
+        if (/youtube|facebook|instagram/.test(area)) return 'social';
+        if (area.startsWith('nav_') || String(url || '').startsWith('#')) return 'nav';
+        if (/youtube\.com\/watch/.test(url || '')) return 'video';
+
+        try {
+            return new URL(url, window.location.href).hostname === window.location.hostname ? 'internal' : 'outbound';
+        } catch {
+            return 'other';
+        }
+    };
+
+    const sendEvent = (name, params = {}) => {
+        if (typeof window.gtag !== 'function') return;
+        window.gtag('event', name, {
+            page_path: window.location.pathname,
+            page_location: window.location.href,
+            transport_type: 'beacon',
+            ...params,
+        });
+    };
+
+    document.addEventListener('click', (event) => {
+        const el = closestAction(event.target);
+        if (!el) return;
+
+        const href = el.getAttribute('href') || '';
+        const url = toUrl(href);
+        const area = getClickArea(el, href, url);
+        const type = getClickType(href || url, area);
+        const params = {
+            click_area: area,
+            click_type: type,
+            click_text: getClickText(el) || area,
+            click_url: url || href || area,
+            event_category: 'cap_yamamoto_lp',
+            event_label: area,
+        };
+
+        sendEvent('lp_click', params);
+        if (type === 'cta') {
+            sendEvent('lp_cta_click', params);
+        }
+    }, true);
+
+    const scrollMarks = [25, 50, 75, 90];
+    const sentScroll = new Set();
+
+    const checkScroll = () => {
+        const doc = document.documentElement;
+        const body = document.body || {};
+        const maxScroll = Math.max(doc.scrollHeight || 0, body.scrollHeight || 0) - window.innerHeight;
+        if (maxScroll <= 0) return;
+
+        const scrollTop = window.pageYOffset || doc.scrollTop || body.scrollTop || 0;
+        const percent = Math.round((scrollTop / maxScroll) * 100);
+        scrollMarks.forEach((mark) => {
+            if (sentScroll.has(mark) || percent < mark) return;
+            sentScroll.add(mark);
+            sendEvent('lp_scroll_depth', {
+                scroll_percent: String(mark),
+                event_category: 'cap_yamamoto_lp',
+                event_label: `scroll_${mark}`,
+            });
+        });
+    };
+
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    window.addEventListener('resize', checkScroll);
+    window.setTimeout(checkScroll, 1000);
+
+    [5, 10, 30, 60].forEach((seconds) => {
+        window.setTimeout(() => {
+            if (document.visibilityState !== 'visible') return;
+            sendEvent('lp_engaged_time', {
+                engagement_bucket: `${seconds}s`,
+                event_category: 'cap_yamamoto_lp',
+                event_label: `engaged_${seconds}s`,
+            });
+        }, seconds * 1000);
+    });
+}
+
+initCapYamamotoTracking();
+
 document.addEventListener('DOMContentLoaded', () => {
     // Mobile hamburger menu (max-width: 900px)
     // aria-expanded を真実の状態源として使う。CSS は body.menu-open でパネル位置 + 背景固定を制御。
