@@ -519,6 +519,25 @@ body {
   height: auto;
 }
 
+/* Hero 左上のスポルアップロゴ (営業面談で "運営元" を最初に見せる) */
+.hero-spollup-logo {
+  position: absolute;
+  top: calc(var(--header-height) + 0.8rem);
+  left: 1.2rem;
+  z-index: 3;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.45rem 0.7rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  line-height: 0;
+}
+.hero-spollup-logo img {
+  display: block;
+  height: 26px;
+  width: auto;
+}
+
 .sp-only { display: none; }
 
 /* Features Section */
@@ -1171,12 +1190,31 @@ button.youtube-nav-next:hover {
   left: 0; transform: none; margin-bottom: 2rem; display: inline-block;
 }
 
+.profile-spollup {
+  margin-bottom: 1rem;
+  line-height: 0;
+}
+.profile-spollup img {
+  display: inline-block;
+  height: 28px;
+  width: auto;
+}
+
 .profile-text h3 {
   font-family: var(--font-warm);
   font-weight: 900;
   font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.6rem;
   color: var(--text-main);
+}
+
+.profile-text .profile-meta {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
 }
 
 .profile-text p {
@@ -1904,6 +1942,9 @@ button.youtube-nav-next:hover {
      写真の胸元にピル画像が被らず、顔+帯の構図に集中させる */
   .hero-btns { display: none; }
   .btn-hero-cta-img { width: 260px; } /* 念のため残すが display:none で非表示 */
+  /* SP: hero 左上ロゴを小さく詰める (顔まわりの visual を邪魔しない範囲で) */
+  .hero-spollup-logo { top: calc(var(--header-height) + 0.4rem); left: 0.7rem; padding: 0.3rem 0.5rem; }
+  .hero-spollup-logo img { height: 20px; }
 
   /* Stats: 3列のまま最小に (小スマホでも横並びを維持) */
   .stat-grid { gap: 0.5rem; }
@@ -1965,6 +2006,8 @@ button.youtube-nav-next:hover {
   .profile-image-placeholder { width: 160px; height: 160px; }
   .profile-text h3 { font-size: 1.6rem; }
   .profile-text p { font-size: 0.95rem; }
+  .profile-spollup img { height: 24px; }
+  .profile-text .profile-meta { font-size: 0.9rem; }
 
   /* Footer */
   .footer { padding: 2.5rem 0 1.8rem; }
